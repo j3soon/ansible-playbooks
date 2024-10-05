@@ -1,6 +1,17 @@
 - name: Setup development environment
   hosts: dev
   tasks:
+    - name: Remove `Connect Your Online Accounts` popup
+      become: true
+      apt:
+        name: gnome-initial-setup
+        state: absent
+      register: remove_gnome_initial_setup
+    - name: Killall `Connect Your Online Accounts` popup
+      become: true
+      shell: killall gnome-initial-setup
+      ignore_errors: true  # In case the process is not running
+      when: remove_gnome_initial_setup.changed
     - name: Install common tools
       become: true
       apt:
