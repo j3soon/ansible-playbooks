@@ -1,0 +1,21 @@
+- name: Setup development environment
+  hosts: dev
+  tasks:
+    - name: Install common tools
+      become: true
+      apt:
+        name:
+          - curl
+          - git
+          - htop
+          - iputils-ping
+          - nano
+          - net-tools
+          - tmux
+          - tree
+          - unzip
+          - vim
+          - wget
+          - zip
+        state: present
+        update_cache: yes
