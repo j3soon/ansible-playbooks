@@ -53,6 +53,7 @@
           - iputils-ping
           - nano
           - net-tools
+          - python3-pip
           - tmux
           - tree
           - unzip
@@ -61,6 +62,15 @@
           - zip
         state: present
         update_cache: yes
+    - name: Install psutil for `dconf`
+      pip:
+        name: psutil
+        state: present
+    - name: Set GNOME favorite apps
+      dconf:
+        key: /org/gnome/shell/favorite-apps
+        value: "['firefox_firefox.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.gedit.desktop']"
+        state: present
     - name: Upgrade apt packages
       become: true
       apt:
