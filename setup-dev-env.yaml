@@ -36,3 +36,11 @@
         upgrade: yes
         update_cache: yes
         cache_valid_time: 86400
+    - name: Check if reboot is required
+      stat:
+        path: /var/run/reboot-required
+      register: reboot_required_file
+    - name: Reboot if required
+      become: true
+      reboot:
+      when: reboot_required_file.stat.exists == true
