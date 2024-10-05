@@ -12,6 +12,17 @@
       shell: killall gnome-initial-setup
       ignore_errors: true  # In case the process is not running
       when: remove_gnome_initial_setup.changed
+    - name: Remove `Upgrade Available` popup
+      become: true
+      apt:
+        name: ubuntu-release-upgrader-core
+        state: absent
+      register: remove_ubuntu_release_upgrader_core
+    - name: Killall `Upgrade Available` popup
+      become: true
+      shell: killall check-new-release-gtk
+      ignore_errors: true  # In case the process is not running
+      when: remove_ubuntu_release_upgrader_core.changed
     - name: Set locale to en_US
       become: true
       copy:
