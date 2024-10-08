@@ -14,6 +14,8 @@
         upgrade: yes
         update_cache: yes
         cache_valid_time: 86400
+        autoclean: true
+        autoremove: true
 
     - name: Check if reboot is required
       # Reference: https://aaronsaray.com/2021/ansible-reboot-if-required/
