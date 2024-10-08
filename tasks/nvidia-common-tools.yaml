@@ -9,7 +9,7 @@
     name:
       - nvidia-driver-535
     state: present
-    update_cache: yes
+    update_cache: true
   register: install_nvidia_driver
 
 - name: Install GUI debugging tools
@@ -30,4 +30,4 @@
       - libgl1
       - vulkan-tools
     state: present
-    update_cache: yes
+    update_cache: true
