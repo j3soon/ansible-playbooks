@@ -1,4 +1,6 @@
 - name: Set locale to en_US
+  # Reference: https://askubuntu.com/a/754355
+  # The file content follows the default locale file in a Ubuntu 22.04 fresh install
   become: true
   copy:
     dest: /etc/default/locale

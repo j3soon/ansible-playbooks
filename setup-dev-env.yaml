@@ -8,6 +8,7 @@
     - include_tasks: tasks/nvidia-common-tools.yaml
 
     - name: Upgrade apt packages
+      # Reference: https://stackoverflow.com/a/41537418
       become: true
       apt:
         upgrade: yes
@@ -15,6 +16,7 @@
         cache_valid_time: 86400
 
     - name: Check if reboot is required
+      # Reference: https://aaronsaray.com/2021/ansible-reboot-if-required/
       stat:
         path: /var/run/reboot-required
       register: reboot_required_file
