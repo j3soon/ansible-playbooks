@@ -74,6 +74,18 @@
         value: "['firefox_firefox.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.gedit.desktop']"
         state: present
 
+    - name: Install graphics debugging tools
+      become: true
+      apt:
+        name:
+          - x11-apps
+          - x11-utils
+          - mesa-utils
+          - libgl1
+          - vulkan-tools
+        state: present
+        update_cache: yes
+
     - name: Upgrade apt packages
       become: true
       apt:
