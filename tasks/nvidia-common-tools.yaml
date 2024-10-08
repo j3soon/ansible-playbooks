@@ -9,6 +9,7 @@
       - nvidia-driver-535
     state: present
     update_cache: yes
+  register: install_nvidia_driver
 
 - name: Install graphics debugging tools
   become: true
