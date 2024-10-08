@@ -88,4 +88,4 @@
     - name: Reboot if required
       become: true
       reboot:
-      when: reboot_required_file.stat.exists == true or set_local.changed
+      when: reboot_required_file.stat.exists == true or set_locale.changed
