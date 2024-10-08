@@ -6,6 +6,7 @@
     - include_tasks: tasks/common-tools.yaml
     - include_tasks: tasks/gnome-favorites.yaml
     - include_tasks: tasks/nvidia-common-tools.yaml
+    - include_tasks: tasks/docker.yaml
 
     - name: Upgrade apt packages
       # Reference: https://stackoverflow.com/a/41537418
