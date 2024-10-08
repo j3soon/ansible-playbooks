@@ -4,6 +4,7 @@
   apt:
     name: gnome-initial-setup
     state: absent
+    purge: true
   register: remove_gnome_initial_setup
 - name: Killall `Connect Your Online Accounts` popup
   shell: killall gnome-initial-setup
@@ -16,6 +17,7 @@
   apt:
     name: ubuntu-release-upgrader-core
     state: absent
+    purge: true
   register: remove_ubuntu_release_upgrader_core
 - name: Killall `Upgrade Available` popup
   shell: killall check-new-release-gtk
