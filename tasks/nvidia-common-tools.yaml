@@ -1,0 +1,23 @@
+# Currently, only the nvidia-driver-535 is being installed.
+# You may need to update this to include additional packages or
+# different versions as required.
+# See: https://ubuntu.com/server/docs/nvidia-drivers-installation
+- name: Install nvidia driver
+  become: true
+  apt:
+    name:
+      - nvidia-driver-535
+    state: present
+    update_cache: yes
+
+- name: Install graphics debugging tools
+  become: true
+  apt:
+    name:
+      - x11-apps
+      - x11-utils
+      - mesa-utils
+      - libgl1
+      - vulkan-tools
+    state: present
+    update_cache: yes

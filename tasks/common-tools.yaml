@@ -1,0 +1,19 @@
+- name: Install common tools
+  become: true
+  apt:
+    name:
+      - curl
+      - git
+      - htop
+      - iputils-ping
+      - nano
+      - net-tools
+      - python3-pip
+      - tmux
+      - tree
+      - unzip
+      - vim
+      - wget
+      - zip
+    state: present
+    update_cache: yes
