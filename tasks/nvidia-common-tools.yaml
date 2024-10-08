@@ -1,4 +1,4 @@
-# Currently, only the nvidia-driver-535 is being installed.
+# Currently, only the nvidia-driver-550 is being installed.
 # You may need to update this to include additional packages or
 # different versions as required.
 # See: https://ubuntu.com/server/docs/nvidia-drivers-installation
@@ -7,7 +7,7 @@
   become: true
   apt:
     name:
-      - nvidia-driver-535
+      - nvidia-driver-550
     state: present
     update_cache: true
   register: install_nvidia_driver
