@@ -60,3 +60,10 @@
       - docker-compose-plugin
     state: present
     update_cache: true
+
+- name: Add user to docker group
+  become: true
+  user:
+    name: "{{ lookup('env', 'USER') }}"
+    groups: docker
+    append: true
