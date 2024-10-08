@@ -8,10 +8,10 @@
         state: absent
       register: remove_gnome_initial_setup
     - name: Killall `Connect Your Online Accounts` popup
-      become: true
       shell: killall gnome-initial-setup
       ignore_errors: true  # In case the process is not running
       when: remove_gnome_initial_setup.changed
+
     - name: Remove `Upgrade Available` popup
       become: true
       apt:
@@ -19,10 +19,10 @@
         state: absent
       register: remove_ubuntu_release_upgrader_core
     - name: Killall `Upgrade Available` popup
-      become: true
       shell: killall check-new-release-gtk
       ignore_errors: true  # In case the process is not running
       when: remove_ubuntu_release_upgrader_core.changed
+
     - name: Set locale to en_US
       become: true
       copy:
@@ -43,6 +43,7 @@
         group: root
         mode: '0644'
       register: set_locale
+
     - name: Install common tools
       become: true
       apt:
@@ -62,6 +63,7 @@
           - zip
         state: present
         update_cache: yes
+
     - name: Install psutil for `dconf`
       pip:
         name: psutil
@@ -71,12 +73,14 @@
         key: /org/gnome/shell/favorite-apps
         value: "['firefox_firefox.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.gedit.desktop']"
         state: present
+
     - name: Upgrade apt packages
       become: true
       apt:
         upgrade: yes
         update_cache: yes
         cache_valid_time: 86400
+
     - name: Check if reboot is required
       stat:
         path: /var/run/reboot-required
