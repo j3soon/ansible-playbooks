@@ -1,0 +1,7 @@
+- name: Install x11vnc
+  become: true
+  apt:
+    name:
+      - x11vnc
+    state: present
+    update_cache: true

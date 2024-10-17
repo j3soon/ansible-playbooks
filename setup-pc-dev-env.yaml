@@ -9,6 +9,7 @@
     - include_tasks: tasks/set-locale.yaml
     - include_tasks: tasks/common-tools.yaml
     - include_tasks: tasks/gnome-favorites.yaml
+    - include_tasks: tasks/x11vnc.yaml
     - include_tasks: tasks/nvidia-common-tools.yaml
     - include_tasks: tasks/docker.yaml
     - include_tasks: tasks/nvidia-docker.yaml
