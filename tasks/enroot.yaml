@@ -1,0 +1,30 @@
+# Ref: https://github.com/NVIDIA/enroot/blob/master/doc/installation.md
+- name: Gather the package facts
+  package_facts:
+    manager: auto
+
+- name: Download enroot package
+  get_url:
+    url: "https://github.com/NVIDIA/enroot/releases/download/v3.5.0/enroot_3.5.0-1_{{ arch_map[ansible_architecture] }}.deb"
+    dest: "/tmp/enroot_3.5.0-1_{{ arch_map[ansible_architecture] }}.deb"
+    mode: '0644'
+  when: "'enroot' not in ansible_facts.packages"
+- name: Install downloaded enroot package
+  become: true
+  apt:
+    deb: "/tmp/enroot_3.5.0-1_{{ arch_map[ansible_architecture] }}.deb"
+    state: present
+  when: "'enroot' not in ansible_facts.packages"
+
+- name: Download enroot+caps package
+  get_url:
+    url: "https://github.com/NVIDIA/enroot/releases/download/v3.5.0/enroot+caps_3.5.0-1_{{ arch_map[ansible_architecture] }}.deb"
+    dest: "/tmp/enroot+caps_3.5.0-1_{{ arch_map[ansible_architecture] }}.deb"
+    mode: '0644'
+  when: "'enroot+caps' not in ansible_facts.packages"
+- name: Install downloaded enroot+caps package
+  become: true
+  apt:
+    deb: "/tmp/enroot+caps_3.5.0-1_{{ arch_map[ansible_architecture] }}.deb"
+    state: present
+  when: "'enroot+caps' not in ansible_facts.packages"

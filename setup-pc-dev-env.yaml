@@ -1,5 +1,9 @@
 - name: Setup development environment
   hosts: dev
+  vars:
+    arch_map:
+      x86_64: amd64
+      aarch64: arm64
   tasks:
     - include_tasks: tasks/suppress-popups.yaml
     - include_tasks: tasks/set-locale.yaml
@@ -8,6 +12,7 @@
     - include_tasks: tasks/nvidia-common-tools.yaml
     - include_tasks: tasks/docker.yaml
     - include_tasks: tasks/nvidia-docker.yaml
+    - include_tasks: tasks/enroot.yaml
 
     - name: Upgrade apt packages
       # Reference: https://stackoverflow.com/a/41537418
