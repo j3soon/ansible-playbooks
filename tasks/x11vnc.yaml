@@ -3,5 +3,4 @@
   apt:
     name:
       - x11vnc
-    state: present
     update_cache: true

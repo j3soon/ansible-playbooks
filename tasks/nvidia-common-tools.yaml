@@ -8,7 +8,6 @@
   apt:
     name:
       - nvidia-driver-550
-    state: present
     update_cache: true
   register: install_nvidia_driver
 
@@ -29,5 +28,4 @@
       - mesa-utils
       - libgl1
       - vulkan-tools
-    state: present
     update_cache: true

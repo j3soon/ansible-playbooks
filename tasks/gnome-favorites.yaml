@@ -1,7 +1,11 @@
-- name: Install psutil for `dconf`
+- name: Install python3-pip for psutil
+  become: true
+  apt:
+    name: python3-pip
+    update_cache: true
+- name: Install psutil for dconf
   pip:
     name: psutil
-    state: present
 - name: Set GNOME favorite apps
   # References:
   # - https://askubuntu.com/a/992351
@@ -9,4 +13,3 @@
   dconf:
     key: /org/gnome/shell/favorite-apps
     value: "['firefox_firefox.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.gedit.desktop']"
-    state: present

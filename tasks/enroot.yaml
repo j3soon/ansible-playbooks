@@ -13,7 +13,6 @@
   become: true
   apt:
     deb: "/tmp/enroot_3.5.0-1_{{ arch_map[ansible_architecture] }}.deb"
-    state: present
   when: "'enroot' not in ansible_facts.packages"
 
 - name: Download enroot+caps package
@@ -26,5 +25,4 @@
   become: true
   apt:
     deb: "/tmp/enroot+caps_3.5.0-1_{{ arch_map[ansible_architecture] }}.deb"
-    state: present
   when: "'enroot+caps' not in ansible_facts.packages"

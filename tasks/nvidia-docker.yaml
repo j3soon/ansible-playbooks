@@ -51,7 +51,6 @@
   become: true
   apt:
     name: nvidia-container-toolkit
-    state: present
     update_cache: true
   register: install_nvidia_docker
 
