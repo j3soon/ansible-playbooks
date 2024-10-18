@@ -18,7 +18,7 @@
     # (Optional) Remote access settings, make sure to not expose your machine to the internet
     - include_tasks: tasks/gdm-auto-login.yaml
     - include_tasks: tasks/x11vnc.yaml
-    - include_tasks: tasks/gnome-remote-desktop.yaml
+    - include_tasks: tasks/vino-vnc.yaml
 
     - name: Upgrade apt packages
       # Reference: https://stackoverflow.com/a/41537418

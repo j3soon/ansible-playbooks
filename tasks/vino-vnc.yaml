@@ -1,0 +1,34 @@
+- name: Install Vino VNC
+  become: true
+  apt:
+    name: vino
+    update_cache: true
+- name: Disable prompt
+  dconf:
+    key: /org/gnome/desktop/remote-access/prompt-enabled
+    value: false
+- name: Disable encryption
+  dconf:
+    key: /org/gnome/desktop/remote-access/require-encryption
+    value: false
+- name: Create autostart directory
+  file:
+    path: ~/.config/autostart
+    state: directory
+    mode: '0755'
+- name: Create vino-server.desktop for autostart
+  copy:
+    dest: ~/.config/autostart/vino-server.desktop
+    content: |
+      [Desktop Entry]
+      Type=Application
+      Name=Vino VNC server
+      Exec=/usr/lib/vino/vino-server
+      NoDisplay=true
+    mode: '0644'
+  tags: autostart
+- name: Start service
+  systemd:
+    name: vino-server
+    state: started
+    scope: user

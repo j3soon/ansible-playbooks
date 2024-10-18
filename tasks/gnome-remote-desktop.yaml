@@ -1,4 +1,5 @@
 # Note that this still requires the keyring to be unlocked locally after startup.
+# This may be bypassed by using a passwordless keyring only for VNC/RDP, but this may require further investigation.
 # Ref: https://man.archlinux.org/man/extra/gnome-remote-desktop/grdctl.1.en
 # Some useful commands:
 # - `grdctl status`
