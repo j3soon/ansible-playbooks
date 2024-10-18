@@ -4,17 +4,21 @@
     arch_map:
       x86_64: amd64
       aarch64: arm64
+    # Make sure to not expose your machine to the internet
+    vnc_password: ubuntu
   tasks:
     - include_tasks: tasks/suppress-popups.yaml
     - include_tasks: tasks/set-locale.yaml
     - include_tasks: tasks/common-tools.yaml
     - include_tasks: tasks/gnome-favorites.yaml
-    - include_tasks: tasks/gdm-auto-login.yaml
-    - include_tasks: tasks/x11vnc.yaml
     - include_tasks: tasks/nvidia-common-tools.yaml
     - include_tasks: tasks/docker.yaml
     - include_tasks: tasks/nvidia-docker.yaml
     - include_tasks: tasks/enroot.yaml
+    # (Optional) Remote access settings, make sure to not expose your machine to the internet
+    - include_tasks: tasks/gdm-auto-login.yaml
+    - include_tasks: tasks/x11vnc.yaml
+    - include_tasks: tasks/gnome-remote-desktop.yaml
 
     - name: Upgrade apt packages
       # Reference: https://stackoverflow.com/a/41537418
@@ -38,3 +42,4 @@
         reboot_required_file.stat.exists == true
         or set_locale.changed
         or install_nvidia_driver.changed
+        or enable_auto_login.changed

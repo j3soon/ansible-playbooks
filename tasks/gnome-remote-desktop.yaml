@@ -1,0 +1,82 @@
+# Note that this still requires the keyring to be unlocked locally after startup.
+# Ref: https://man.archlinux.org/man/extra/gnome-remote-desktop/grdctl.1.en
+# Some useful commands:
+# - `grdctl status`
+# - `dconf dump /`
+# - `python3 ./gnome-keyring-dumper-ng.py`
+#   See: https://github.com/j3soon/gnome-keyring-dumper
+
+- name: Install libsecret-tools for secret-tool
+  become: true
+  apt:
+    name: libsecret-tools
+    update_cache: true
+
+# VNC
+- name: Enable Legacy VNC Protocol
+  dconf:
+    key: /org/gnome/desktop/remote-desktop/vnc/enable
+    value: true
+  register: enable_remote_desktop_vnc
+- name: Enable Remote Control
+  dconf:
+    key: /org/gnome/desktop/remote-desktop/vnc/view-only
+    value: false
+- name: --ask-become-pass
+  pause:
+    prompt: "Password:"
+    echo: false
+  register: password
+  when: enable_remote_desktop_vnc.changed
+- name: Unlock GNOME password store
+  shell: echo -n "{{ password.user_input }}" | /usr/bin/gnome-keyring-daemon --daemonize --login
+  when: enable_remote_desktop_vnc.changed
+- name: Set Password
+  shell: echo -n "{{ vnc_password }}" | secret-tool store --label="GNOME Remote Desktop VNC password" "xdg:schema" "org.gnome.RemoteDesktop.VncPassword"
+  when: enable_remote_desktop_vnc.changed
+- name: Use Password
+  dconf:
+    key: /org/gnome/desktop/remote-desktop/vnc/auth-method
+    value: "'password'"
+
+# RDP
+- name: Enable RDP Protocol
+  dconf:
+    key: /org/gnome/desktop/remote-desktop/rdp/enable
+    value: true
+  register: enable_remote_desktop_rdp
+- name: Enable Remote Control
+  dconf:
+    key: /org/gnome/desktop/remote-desktop/rdp/view-only
+    value: false
+- name: Set TLS certificate
+  dconf:
+    key: /org/gnome/desktop/remote-desktop/rdp/tls-cert
+    value: "'/home/{{ ansible_user_id }}/.local/share/gnome-remote-desktop/rdp-tls.crt'"
+- name: Set TLS key
+  dconf:
+    key: /org/gnome/desktop/remote-desktop/rdp/tls-key
+    value: "'/home/{{ ansible_user_id }}/.local/share/gnome-remote-desktop/rdp-tls.key'"
+- name: Set Password
+  shell: |
+    echo -n "{'username': <'{{ ansible_user_id }}'>, 'password': <'{{ vnc_password }}'>}" | secret-tool store --label="GNOME Remote Desktop RDP credentials" "xdg:schema" "org.gnome.RemoteDesktop.RdpCredentials"
+  when: enable_remote_desktop_rdp.changed
+# Ref: https://discussion.fedoraproject.org/t/is-possible-regenerate-the-encryption-fingerprint-for-the-remote-desktop-configuration/79711/2
+# Ref: https://superuser.com/a/226229
+- name: Generate TLS certificate and key
+  shell: |
+    openssl genrsa -out tls.key 4096
+    openssl req -new -key tls.key -out tls.csr -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=www.example.com"
+    openssl x509 -req -days 730 -signkey tls.key -in tls.csr -out tls.crt
+    mkdir ~/.local/share/gnome-remote-desktop
+    mv tls.crt ~/.local/share/gnome-remote-desktop/rdp-tls.crt
+    mv tls.key ~/.local/share/gnome-remote-desktop/rdp-tls.key
+    rm tls.csr
+  when: enable_remote_desktop_rdp.changed
+
+- name: Enable gnome-remote-desktop service
+  systemd:
+    name: gnome-remote-desktop.service
+    enabled: yes
+    state: started
+    scope: user
