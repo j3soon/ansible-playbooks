@@ -11,6 +11,15 @@
     path: /etc/gdm3/custom.conf
     regexp: '^#.*AutomaticLogin.*=.*$'
     line: 'AutomaticLogin = {{ ansible_user_id }}'
+- name: Require reboot
+  copy:
+    content: ""
+    dest: /var/run/reboot-required
+    force: false
+    owner: root
+    group: root
+    mode: '0644'
+  when: enable_auto_login.changed
 
 - name: Disable Screen Lock
   dconf:

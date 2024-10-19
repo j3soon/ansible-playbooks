@@ -10,6 +10,15 @@
       - nvidia-driver-550
     update_cache: true
   register: install_nvidia_driver
+- name: Require reboot
+  copy:
+    content: ""
+    dest: /var/run/reboot-required
+    force: false
+    owner: root
+    group: root
+    mode: '0644'
+  when: install_nvidia_driver.changed
 
 - name: Install GUI debugging tools
   # - `x11-apps` and `x11-utils` for `xeyes` and `xdpyinfo`
