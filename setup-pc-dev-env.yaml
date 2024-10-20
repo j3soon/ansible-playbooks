@@ -20,6 +20,7 @@
     - include_tasks: tasks/x11vnc.yaml
     - include_tasks: tasks/vino-vnc.yaml
     - include_tasks: tasks/set-ufw.yaml
+    - include_tasks: tasks/mute-system-volume.yaml
 
     - name: Upgrade apt packages
       # Reference: https://stackoverflow.com/a/41537418

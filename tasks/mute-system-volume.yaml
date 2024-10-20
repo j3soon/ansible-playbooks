@@ -1,0 +1,6 @@
+# Ref: https://askubuntu.com/a/380765
+# Ref: https://askubuntu.com/a/404242
+- name: Mute System Volume
+  shell: |
+    pactl set-sink-volume @DEFAULT_SINK@ 0%
+    pactl set-sink-mute @DEFAULT_SINK@ true
