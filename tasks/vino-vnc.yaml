@@ -27,9 +27,13 @@
       NoDisplay=true
     mode: '0644'
   register: vino_server_desktop_autostart
-- name: Start service
-  systemd:
-    name: vino-server
-    state: started
-    scope: user
+- name: Require reboot
+  become: true
+  copy:
+    content: ""
+    dest: /var/run/reboot-required
+    force: false
+    owner: root
+    group: root
+    mode: '0644'
   when: vino_server_desktop_autostart.changed
