@@ -19,6 +19,7 @@
     - include_tasks: tasks/gdm-auto-login.yaml
     - include_tasks: tasks/x11vnc.yaml
     - include_tasks: tasks/vino-vnc.yaml
+    - include_tasks: tasks/set-ufw.yaml
 
     - name: Upgrade apt packages
       # Reference: https://stackoverflow.com/a/41537418

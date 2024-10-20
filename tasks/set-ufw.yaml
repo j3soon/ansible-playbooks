@@ -1,0 +1,17 @@
+- name: Allow SSH through UFW
+  become: true
+  ufw:
+    rule: allow
+    port: ssh
+    proto: tcp
+- name: Enable UFW
+  become: true
+  ufw:
+    state: enabled
+- name: Allow VNC access from internal network
+  become: true
+  ufw:
+    rule: allow
+    src: 192.168.0.0/16
+    port: 5900
+    proto: tcp
