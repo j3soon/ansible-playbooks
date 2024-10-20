@@ -11,6 +11,7 @@
     update_cache: true
   register: install_nvidia_driver
 - name: Require reboot
+  become: true
   copy:
     content: ""
     dest: /var/run/reboot-required

@@ -12,6 +12,7 @@
     regexp: '^#.*AutomaticLogin.*=.*$'
     line: 'AutomaticLogin = {{ ansible_user_id }}'
 - name: Require reboot
+  become: true
   copy:
     content: ""
     dest: /var/run/reboot-required

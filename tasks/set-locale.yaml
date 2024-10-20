@@ -21,6 +21,7 @@
     mode: '0644'
   register: set_locale
 - name: Require reboot
+  become: true
   copy:
     content: ""
     dest: /var/run/reboot-required
