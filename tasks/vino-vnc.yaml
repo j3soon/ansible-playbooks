@@ -26,9 +26,10 @@
       Exec=/usr/lib/vino/vino-server
       NoDisplay=true
     mode: '0644'
-  tags: autostart
+  register: vino_server_desktop_autostart
 - name: Start service
   systemd:
     name: vino-server
     state: started
     scope: user
+  when: vino_server_desktop_autostart.changed
