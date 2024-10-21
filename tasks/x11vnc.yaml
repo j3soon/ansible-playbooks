@@ -6,31 +6,23 @@
     name:
       - x11vnc
     update_cache: true
-- name: Create x11vnc.service for autostart
-  become: true
+- name: Create autostart directory
+  file:
+    path: ~/.config/autostart
+    state: directory
+    mode: '0755'
+- name: Create x11vnc.desktop for autostart
+  # Use autostart instead of systemd service to prevent display not found error (Potentially due to Wayland?)
   copy:
-    dest: /lib/systemd/system/x11vnc.service
+    dest: ~/.config/autostart/x11vnc.desktop
     content: |
-      [Unit]
-      Description=Start x11vnc at startup.
-      After=multi-user.target
-      [Service]
-      Type=simple
-      ExecStart=/usr/bin/x11vnc -auth guess -forever -loop -noxdamage -repeat -shared -xkb -find
-      [Install]
-      WantedBy=multi-user.target
-    owner: root
-    group: root
+      [Desktop Entry]
+      Type=Application
+      Name=X11 VNC server
+      Exec=/usr/bin/x11vnc -auth guess -forever -loop -noxdamage -repeat -shared -xkb -find
+      NoDisplay=true
     mode: '0644'
-  register: x11vnc_service_autostart
-# Below doesn't seem to work
-# - name: Enable x11vnc service
-#   become: true
-#   systemd:
-#     name: x11vnc.service
-#     enabled: true
-#     state: started
-#     daemon_reload: true
+  register: x11vnc_desktop_autostart
 - name: Require reboot
   become: true
   copy:
@@ -40,7 +32,7 @@
     owner: root
     group: root
     mode: '0644'
-  when: x11vnc_service_autostart.changed
+  when: x11vnc_desktop_autostart.changed
 - name: Allow VNC access from internal network
   become: true
   ufw:
