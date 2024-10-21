@@ -16,3 +16,6 @@
       - wget
       - zip
     update_cache: true
+- name: Install psutil for dconf
+  pip:
+    name: psutil
