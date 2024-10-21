@@ -19,6 +19,7 @@
     value: false
 - name: Only allow local connections (must use SSH tunneling)
   # Ref: https://help.ubuntu.com/community/VNC/Servers#vino
+  # Add `state: absent` to allow remote connections.
   dconf:
     key: /org/gnome/desktop/remote-access/network-interface
     value: "'lo'"

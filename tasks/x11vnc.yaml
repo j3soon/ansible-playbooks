@@ -11,15 +11,16 @@
     path: ~/.config/autostart
     state: directory
     mode: '0755'
-- name: Create x11vnc.desktop for autostart
+- name: Create x11vnc.desktop for autostart (must use SSH tunneling)
   # Use autostart instead of systemd service to prevent display not found error (Potentially due to Wayland?)
+  # Remove `-localhost` to allow remote connections.
   copy:
     dest: ~/.config/autostart/x11vnc.desktop
     content: |
       [Desktop Entry]
       Type=Application
       Name=X11 VNC server
-      Exec=/usr/bin/x11vnc -auth guess -forever -loop -noxdamage -repeat -shared -xkb -find
+      Exec=/usr/bin/x11vnc -auth guess -forever -loop -noxdamage -repeat -shared -xkb -find -localhost
       NoDisplay=true
     mode: '0644'
   register: x11vnc_desktop_autostart
