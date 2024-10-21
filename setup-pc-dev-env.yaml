@@ -9,7 +9,8 @@
     - include_tasks: tasks/set-locale.yaml
     - include_tasks: tasks/common-tools.yaml
     - include_tasks: tasks/gnome-favorites.yaml
-    - include_tasks: tasks/nvidia-common-tools.yaml
+    - include_tasks: tasks/nvidia-driver.yaml
+    - include_tasks: tasks/gui-tools.yaml
     - include_tasks: tasks/docker.yaml
     - include_tasks: tasks/nvidia-docker.yaml
     - include_tasks: tasks/enroot.yaml

@@ -1,26 +1,3 @@
-# Currently, only the nvidia-driver-550 is being installed.
-# You may need to update this to include additional packages or
-# different versions as required.
-# See: https://ubuntu.com/server/docs/nvidia-drivers-installation
-- name: Install nvidia driver
-  # Ref: https://ubuntu.com/server/docs/nvidia-drivers-installation
-  become: true
-  apt:
-    name:
-      - nvidia-driver-550
-    update_cache: true
-  register: install_nvidia_driver
-- name: Require reboot
-  become: true
-  copy:
-    content: ""
-    dest: /var/run/reboot-required
-    force: false
-    owner: root
-    group: root
-    mode: '0644'
-  when: install_nvidia_driver.changed
-
 - name: Install GUI debugging tools
   # - `x11-apps` and `x11-utils` for `xeyes` and `xdpyinfo`
   #   Ref: https://packages.debian.org/sid/x11-apps
