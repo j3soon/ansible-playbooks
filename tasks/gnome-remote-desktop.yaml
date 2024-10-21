@@ -78,6 +78,6 @@
 - name: Enable gnome-remote-desktop service
   systemd:
     name: gnome-remote-desktop.service
-    enabled: yes
+    enabled: true
     state: started
     scope: user

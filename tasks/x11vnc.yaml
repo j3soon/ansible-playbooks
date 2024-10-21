@@ -1,6 +1,50 @@
+# Ref: https://wiki.archlinux.org/title/X11vnc
+# Ref: https://help.ubuntu.com/community/VNC/Servers#x11vnc
 - name: Install x11vnc
   become: true
   apt:
     name:
       - x11vnc
     update_cache: true
+- name: Create x11vnc.service for autostart
+  become: true
+  copy:
+    dest: /lib/systemd/system/x11vnc.service
+    content: |
+      [Unit]
+      Description=Start x11vnc at startup.
+      After=multi-user.target
+      [Service]
+      Type=simple
+      ExecStart=/usr/bin/x11vnc -auth guess -forever -loop -noxdamage -repeat -shared -xkb -find
+      [Install]
+      WantedBy=multi-user.target
+    owner: root
+    group: root
+    mode: '0644'
+  register: x11vnc_service_autostart
+# Below doesn't seem to work
+# - name: Enable x11vnc service
+#   become: true
+#   systemd:
+#     name: x11vnc.service
+#     enabled: true
+#     state: started
+#     daemon_reload: true
+- name: Require reboot
+  become: true
+  copy:
+    content: ""
+    dest: /var/run/reboot-required
+    force: false
+    owner: root
+    group: root
+    mode: '0644'
+  when: x11vnc_service_autostart.changed
+- name: Allow VNC access from internal network
+  become: true
+  ufw:
+    rule: allow
+    src: 192.168.0.0/16
+    port: 5900
+    proto: tcp
