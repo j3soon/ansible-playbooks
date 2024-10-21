@@ -1,3 +1,9 @@
+# Known issues:
+# - Vino VNC will have issues when the Display Scaling is not 100%.
+#   Ref: https://bugs.launchpad.net/ubuntu/+source/vino/+bug/1668309
+#   Ref: https://gitlab.gnome.org/Archive/vino/-/issues/9
+# - In addition, Vino VNC is archived and not actively maintained.
+#   Ref: https://gitlab.gnome.org/Archive/vino
 - name: Install Vino VNC
   become: true
   apt:
@@ -11,6 +17,11 @@
   dconf:
     key: /org/gnome/desktop/remote-access/require-encryption
     value: false
+- name: Only allow local connections (must use SSH tunneling)
+  # Ref: https://help.ubuntu.com/community/VNC/Servers#vino
+  dconf:
+    key: /org/gnome/desktop/remote-access/network-interface
+    value: "'lo'"
 - name: Create autostart directory
   file:
     path: ~/.config/autostart
