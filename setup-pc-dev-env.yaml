@@ -16,7 +16,6 @@
     - include_tasks: tasks/nvidia-docker.yaml
     - include_tasks: tasks/enroot.yaml
     # (Optional) Remote access settings, make sure to not expose your machine to the internet
-    - include_tasks: tasks/set-ufw.yaml
     - include_tasks: tasks/gdm-auto-login.yaml
     - include_tasks: tasks/x11vnc.yaml
     - include_tasks: tasks/mute-system-volume.yaml
