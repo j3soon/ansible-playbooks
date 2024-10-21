@@ -26,3 +26,7 @@
   dconf:
     key: /org/gnome/desktop/screensaver/lock-enabled
     value: false
+- name: Disable Animation
+  dconf:
+    key: /org/gnome/desktop/interface/enable-animations
+    value: false
