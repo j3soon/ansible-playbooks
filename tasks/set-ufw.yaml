@@ -4,6 +4,12 @@
     rule: allow
     port: ssh
     proto: tcp
+- name: Allow Custom SSH port through UFW
+  become: true
+  ufw:
+    rule: allow
+    port: 2222
+    proto: tcp
 - name: Enable UFW
   become: true
   ufw:
