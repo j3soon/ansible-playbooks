@@ -1,0 +1,36 @@
+- name: Setup development environment
+  hosts: dev
+  vars:
+    arch_map:
+      x86_64: amd64
+      aarch64: arm64
+  tasks:
+    # Note that Docker, Docker Compose, NVIDIA Driver, and NVIDIA Docker, are installed by default on Jetson
+    - include_tasks: tasks/suppress-popups.yaml
+    - include_tasks: tasks/set-locale.yaml
+    - include_tasks: tasks/common-tools.yaml
+    - include_tasks: tasks/gnome-favorites.yaml
+    - include_tasks: tasks/gui-tools.yaml
+    - include_tasks: tasks/gdm-auto-login.yaml
+    - include_tasks: tasks/x11vnc.yaml
+    - include_tasks: tasks/mute-system-volume.yaml
+
+    - name: Upgrade apt packages
+      # Reference: https://stackoverflow.com/a/41537418
+      become: true
+      apt:
+        upgrade: true
+        update_cache: true
+        cache_valid_time: 86400
+        autoclean: true
+        autoremove: true
+
+    - name: Check if reboot is required
+      # Reference: https://aaronsaray.com/2021/ansible-reboot-if-required/
+      stat:
+        path: /var/run/reboot-required
+      register: reboot_required_file
+    - name: Reboot if required
+      become: true
+      reboot:
+      when: reboot_required_file.stat.exists == true
