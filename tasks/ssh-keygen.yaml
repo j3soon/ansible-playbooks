@@ -1,0 +1,9 @@
+# Ref: https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent?platform=linux
+# Ref: https://superuser.com/a/478799
+- name: Check if SSH key exists
+  stat:
+    path: ~/.ssh/id_ed25519
+  register: id_ed25519
+- name: Generate SSH key
+  command: ssh-keygen -t ed25519 -N '' -f ~/.ssh/id_ed25519
+  when: not id_ed25519.stat.exists
