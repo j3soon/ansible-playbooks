@@ -54,6 +54,12 @@
       - docker-compose-plugin
     update_cache: true
 
+- name: Ensure docker group exists
+  become: true
+  group:
+    name: docker
+    state: present
+
 - name: Add user to docker group
   become: true
   user:
