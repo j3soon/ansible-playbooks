@@ -1,0 +1,6 @@
+- name: Install NVIDIA tools
+  become: true
+  apt:
+    name:
+      - nvtop
+    update_cache: true
