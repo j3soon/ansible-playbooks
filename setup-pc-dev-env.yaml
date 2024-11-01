@@ -19,6 +19,7 @@
     - include_tasks: tasks/gdm-auto-login.yaml
     - include_tasks: tasks/x11vnc.yaml
     - include_tasks: tasks/mute-system-volume.yaml
+    - include_tasks: tasks/git-config-for-johnson.yaml
 
     - name: Upgrade apt packages
       # Reference: https://stackoverflow.com/a/41537418
