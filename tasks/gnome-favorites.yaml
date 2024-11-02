@@ -4,4 +4,4 @@
   # - https://help.gnome.org/admin/system-admin-guide/stable/desktop-favorite-applications.html.en
   dconf:
     key: /org/gnome/shell/favorite-apps
-    value: "['firefox_firefox.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.gedit.desktop']"
+    value: "['firefox_firefox.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.gedit.desktop', 'code_code.desktop']"

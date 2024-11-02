@@ -1,0 +1,7 @@
+# Ref: https://snapcraft.io/code
+# Ref: https://code.visualstudio.com/docs/setup/linux#_snap
+- name: Install Visual Studio Code
+  become: true
+  snap:
+    name: code
+    classic: true
