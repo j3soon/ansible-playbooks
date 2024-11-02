@@ -1,3 +1,4 @@
+# You should expect at least 3 changes per run.
 - name: Setup development environment
   hosts: dev
   vars:
@@ -6,6 +7,7 @@
       aarch64: arm64
   tasks:
     - include_tasks: tasks/stop-unattended-upgr.yaml
+
     - include_tasks: tasks/suppress-popups.yaml
     - include_tasks: tasks/set-locale.yaml
     - include_tasks: tasks/common-tools.yaml
