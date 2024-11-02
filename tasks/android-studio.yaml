@@ -1,0 +1,7 @@
+# Ref: https://developer.android.com/studio/install#linux
+# Ref: https://snapcraft.io/android-studio
+- name: Install Android Studio
+  become: true
+  snap:
+    name: android-studio
+    classic: true
