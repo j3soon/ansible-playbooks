@@ -1,0 +1,5 @@
+- name: Start unattended-upgr
+  become: true
+  systemd:
+    name: unattended-upgrades.service
+    state: started

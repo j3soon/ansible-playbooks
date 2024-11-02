@@ -1,0 +1,5 @@
+- name: Stop unattended-upgr
+  become: true
+  systemd:
+    name: unattended-upgrades.service
+    state: stopped
