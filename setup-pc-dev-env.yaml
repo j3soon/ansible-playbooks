@@ -20,6 +20,7 @@
     - include_tasks: tasks/x11vnc.yaml
     - include_tasks: tasks/mute-system-volume.yaml
     - include_tasks: tasks/git-config-for-johnson.yaml
+    - include_tasks: tasks/zsh-and-plugins.yaml
 
     - name: Upgrade apt packages
       # Reference: https://stackoverflow.com/a/41537418

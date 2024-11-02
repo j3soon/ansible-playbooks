@@ -1,0 +1,76 @@
+# These tasks generate `~/.zshrc`, `~/.fzf`, and `~/.oh-my-zsh`.
+# Use the following command for uninstallation:
+#     rm -rf ~/.zshrc ~/.fzf ~/.oh-my-zsh
+- name: Check if .zshrc exists
+  stat:
+    path: ~/.zshrc
+  register: zshrc_file
+- name: Install zsh and curl
+  become: true
+  apt:
+    name:
+      - zsh
+      - curl
+    update_cache: true
+- name: Install oh-my-zsh unattended
+  shell: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+  when: not zshrc_file.stat.exists
+- name: Download fzf
+  git:
+    repo: https://github.com/junegunn/fzf.git
+    dest: ~/.fzf
+    depth: 1
+  when: not zshrc_file.stat.exists
+- name: Install fzf
+  shell: ~/.fzf/install<&-
+  when: not zshrc_file.stat.exists
+- name: Clone zsh-autosuggestions
+  git:
+    repo: https://github.com/zsh-users/zsh-autosuggestions
+    dest: ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+    depth: 1
+  when: not zshrc_file.stat.exists
+- name: Clone zsh-syntax-highlighting
+  git:
+    repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+    dest: ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+    depth: 1
+  when: not zshrc_file.stat.exists
+- name: Set up zsh plugins in .zshrc
+  replace:
+    path: ~/.zshrc
+    regexp: '^plugins=\(.*?\)'
+    replace: |-
+      plugins=(
+          git
+          zsh-autosuggestions
+          zsh-interactive-cd # sudo apt-get install fzf
+          zsh-syntax-highlighting
+      )
+  when: not zshrc_file.stat.exists
+- name: Change default shell to zsh
+  become: true
+  shell: chsh -s $(which zsh) {{ ansible_facts.user_id }}
+  when: not zshrc_file.stat.exists
+- name: Install fonts-powerline
+  become: true
+  apt:
+    name: fonts-powerline
+    update_cache: true
+  when: not zshrc_file.stat.exists
+- name: Set powerline theme in .zshrc
+  lineinfile:
+    path: ~/.zshrc
+    regexp: '^ZSH_THEME=.*$'
+    line: 'ZSH_THEME="agnoster"'
+  when: not zshrc_file.stat.exists
+- name: Require reboot
+  become: true
+  copy:
+    content: ""
+    dest: /var/run/reboot-required
+    force: false
+    owner: root
+    group: root
+    mode: '0644'
+  when: not zshrc_file.stat.exists
