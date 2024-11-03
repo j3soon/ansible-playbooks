@@ -1,0 +1,8 @@
+# Ref: https://askubuntu.com/a/1452547
+- name: Install OpenJDK for Java
+  become: true
+  apt:
+    name:
+      - openjdk-17-jdk
+      - openjdk-17-jdk-headless
+    update_cache: true
