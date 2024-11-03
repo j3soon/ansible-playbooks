@@ -8,6 +8,7 @@
       - iputils-ping
       - nano
       - net-tools
+      - plocate
       - python3-pip
       - tmux
       - tree
