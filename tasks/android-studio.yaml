@@ -5,3 +5,9 @@
   snap:
     name: android-studio
     classic: true
+# Required for using adb anywhere
+# Ref: https://developer.android.com/studio/run/device
+- name: Add Android SDK platform-tools to PATH
+  lineinfile:
+    path: "~/.profile"
+    line: 'export PATH="$PATH:$HOME/Android/Sdk/platform-tools/"'
