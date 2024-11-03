@@ -64,6 +64,12 @@
     regexp: '^ZSH_THEME=.*$'
     line: 'ZSH_THEME="agnoster"'
   when: not zshrc_file.stat.exists
+# Ref: https://stackoverflow.com/a/26020688
+- name: Source .profile in .zshrc
+  lineinfile:
+    path: ~/.zshrc
+    line: "[[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'"
+  when: not zshrc_file.stat.exists
 - name: Require reboot
   become: true
   copy:
