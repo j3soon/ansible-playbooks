@@ -6,4 +6,5 @@
   shell: |
     git config --global user.name "Johnson Sun"
     git config --global user.email "j3.soon777@gmail.com"
+    git config --global core.editor "code --wait"
   when: not gitconfig.stat.exists
