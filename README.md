@@ -24,6 +24,32 @@ Set up OpenSSH server and Copy SSH Key on the remote hosts by following [this po
 
 ## Basics
 
+On x86:
+
 ```sh
-ansible-playbook --ask-become-pass -i inventory setup-dev-env.yaml
+ansible-playbook --ask-become-pass -i inventory setup-pc-dev-env.yaml
+```
+
+On Jetson:
+
+```sh
+ansible-playbook --ask-become-pass -i inventory setup-jetson-dev-env.yaml
+```
+
+On Local (need to comment out all unnecessary tasks):
+
+```sh
+ansible-playbook --ask-become-pass -i inventory setup-pc-dev-env.yaml --connection=local
+```
+
+## Debug
+
+```sh
+ansible-playbook --ask-become-pass -i inventory setup-pc-dev-env.yaml -vvvv
+```
+
+If strange issue occurs, consider upgrading the local host:
+
+```sh
+sudo apt-get upgrade
 ```
