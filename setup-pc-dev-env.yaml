@@ -18,6 +18,7 @@
     - include_tasks: tasks/nvidia-tools.yaml
     - include_tasks: tasks/gui-tools.yaml
     - include_tasks: tasks/docker.yaml
+    - include_tasks: tasks/docker-group.yaml
     - include_tasks: tasks/nvidia-docker.yaml
     - include_tasks: tasks/enroot.yaml
     - include_tasks: tasks/gdm-auto-login.yaml

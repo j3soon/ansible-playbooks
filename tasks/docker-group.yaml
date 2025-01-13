@@ -1,0 +1,14 @@
+# Ref: https://docs.docker.com/engine/install/ubuntu/
+# Potential Future Ref: https://github.com/geerlingguy/ansible-role-docker
+- name: Ensure docker group exists
+  become: true
+  group:
+    name: docker
+    state: present
+
+- name: Add user to docker group
+  become: true
+  user:
+    name: "{{ ansible_facts.user_id }}"
+    groups: docker
+    append: true
