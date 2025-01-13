@@ -1,0 +1,11 @@
+# Ref: https://github.com/jetsonhacks/jetsonUtilities
+- name: Ensure ~/software directory exists
+  file:
+    path: "~/software"
+    state: directory
+    mode: '0755'
+
+- name: Clone jetsonUtilities repository
+  git:
+    repo: https://github.com/jetsonhacks/jetsonUtilities.git
+    dest: "~/software/jetsonUtilities"
