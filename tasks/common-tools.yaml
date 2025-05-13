@@ -4,12 +4,15 @@
     name:
       - curl
       - git
+      - git-lfs
       - htop
       - iputils-ping
+      - jq
       - nano
       - net-tools
       - plocate
       - python3-pip
+      - tar
       - tmux
       - tree
       - unzip
