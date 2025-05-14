@@ -1,0 +1,5 @@
+# Ref: https://github.com/rbonghi/jetson_stats
+- name: Install jtop (jetson-stats)
+  become: true
+  ansible.builtin.pip:
+    name: jetson-stats
