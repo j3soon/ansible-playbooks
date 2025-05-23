@@ -15,6 +15,7 @@
     - include_tasks: tasks/gdm-auto-login.yaml
     - include_tasks: tasks/x11vnc.yaml
     - include_tasks: tasks/mute-system-volume.yaml
+    include_tasks: tasks/zsh-and-plugins.yaml
     - include_tasks: tasks/jetsonhacks-jetsonUtilities.yaml
     - include_tasks: tasks/jtop.yaml
 
