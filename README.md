@@ -39,6 +39,7 @@ ansible-playbook --ask-become-pass -i inventory setup-jetson-dev-env.yaml
 On Local (need to comment out all unnecessary tasks):
 
 ```sh
+# Note that this will install everything on the current local host.
 ansible-playbook --ask-become-pass -i inventory setup-pc-dev-env.yaml --connection=local
 ```
 

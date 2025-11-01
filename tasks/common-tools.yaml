@@ -10,6 +10,9 @@
       - jq
       - nano
       - net-tools
+      - netcat-openbsd
+      - nmap
+      - p7zip-full
       - plocate
       - python3-pip
       - tar
@@ -17,6 +20,7 @@
       - tree
       - unzip
       - vim
+      - wakeonlan
       - wget
       - zip
     update_cache: true
@@ -25,5 +29,8 @@
   snap:
     name: firefox
 - name: Install psutil for dconf
-  pip:
-    name: psutil
+  become: true
+  apt:
+    name: python3-psutil
+    state: present
+    update_cache: true

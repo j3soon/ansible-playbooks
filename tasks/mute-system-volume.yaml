@@ -1,6 +1,12 @@
 # Ref: https://askubuntu.com/a/380765
 # Ref: https://askubuntu.com/a/404242
 # Note that this always causes a `changed` state in play recap
+- name: Install pulseaudio-utils
+  become: true
+  apt:
+    name: pulseaudio-utils
+    state: present
+    update_cache: true
 - name: Mute System Volume
   shell: |
     pactl set-sink-volume @DEFAULT_SINK@ 0%
