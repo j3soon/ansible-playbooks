@@ -1,4 +1,4 @@
-- name: Set locale to en_US
+- name: Set locale to en_US (Ubuntu 22.04)
   # Reference: https://askubuntu.com/a/754355
   # The file content follows the default locale file in a Ubuntu 22.04 fresh install
   become: true
@@ -19,7 +19,22 @@
     owner: root
     group: root
     mode: '0644'
-  register: set_locale
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_version is version('22.04', '==')
+  register: set_locale_22
+
+- name: Set locale to en_US (Ubuntu 24.04)
+  # The file content follows the default locale file in a Ubuntu 24.04 fresh install
+  become: true
+  copy:
+    dest: /etc/locale.conf
+    content: |
+      LANG=en_US.UTF-8
+    owner: root
+    group: root
+    mode: '0644'
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_version is version('24.04', '==')
+  register: set_locale_24
+
 - name: Require reboot
   become: true
   copy:
@@ -29,4 +44,4 @@
     owner: root
     group: root
     mode: '0644'
-  when: set_locale.changed
+  when: (set_locale_22 is defined and set_locale_22.changed) or (set_locale_24 is defined and set_locale_24.changed)
