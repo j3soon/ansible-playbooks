@@ -4,4 +4,7 @@
   # - https://help.gnome.org/admin/system-admin-guide/stable/desktop-favorite-applications.html.en
   dconf:
     key: /org/gnome/shell/favorite-apps
-    value: "['firefox_firefox.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.gedit.desktop', 'code_code.desktop']"
+    value: "['firefox_firefox.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.gedit.desktop', 'org.gnome.TextEditor.desktop', 'code_code.desktop']"
+    # Notes:
+    # - Ubuntu 22.04: 'org.gnome.gedit.desktop'
+    # - Ubuntu 24.04: 'org.gnome.TextEditor.desktop'
