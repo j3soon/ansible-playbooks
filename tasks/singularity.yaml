@@ -1,0 +1,18 @@
+# Known issues:
+# - The original Singularity project has been renamed to Apptainer,
+#   while SingularityCE is a fork by Sylabs.
+#   Ref: https://en.wikipedia.org/wiki/Singularity_(software)
+#   Ref: https://github.com/apptainer/apptainer/issues/2248
+# - Please use Apptainer instead of Singularity.
+# Ref: https://docs.sylabs.io/guides/3.0/user-guide/installation.html
+# Ref: https://docs.sylabs.io/guides/4.3/user-guide/quick_start.html
+
+- name: Alternative Recommendation
+  fail:
+    msg: "Singularity has been renamed to Apptainer. Please use Apptainer instead."
+    exit_code: 1
+- name: Install SingularityCE
+  become: true
+  apt:
+    name: singularity-container
+    update_cache: true

@@ -4,6 +4,10 @@
 #   Ref: https://gitlab.gnome.org/Archive/vino/-/issues/9
 # - In addition, Vino VNC is archived and not actively maintained.
 #   Ref: https://gitlab.gnome.org/Archive/vino
+- name: Alternative Recommendation
+  fail:
+    msg: "Vino VNC is archived and not actively maintained. Please use x11vnc instead."
+    exit_code: 1
 - name: Install Vino VNC
   become: true
   apt:
