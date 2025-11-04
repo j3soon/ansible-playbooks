@@ -13,6 +13,7 @@
     - include_tasks: tasks/set-locale.yaml
     - include_tasks: tasks/common-tools.yaml
     - include_tasks: tasks/vscode.yaml
+    - include_tasks: tasks/uv.yaml
     - include_tasks: tasks/gnome-favorites.yaml
     - include_tasks: tasks/ssh-keygen.yaml
     - include_tasks: tasks/nvidia-driver.yaml

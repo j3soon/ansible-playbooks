@@ -1,0 +1,21 @@
+# Ref: https://docs.astral.sh/uv/getting-started/installation/
+- name: Check if uv is already installed
+  command: "{{ ansible_env.HOME }}/.local/bin/uv --version"
+  register: uv_check
+  failed_when: false
+  changed_when: false
+
+- name: Install uv via standalone installer
+  shell: curl -LsSf https://astral.sh/uv/install.sh | sh
+  args:
+    executable: /bin/bash
+  when: uv_check.rc != 0
+
+- name: Verify uv installation
+  command: "{{ ansible_env.HOME }}/.local/bin/uv --version"
+  register: uv_version
+  changed_when: false
+
+- name: Display uv version
+  debug:
+    msg: "uv installed: {{ uv_version.stdout }}"
