@@ -1,0 +1,21 @@
+---
+# Install Apptainer (formerly Singularity)
+# Ref: https://apptainer.org/docs/admin/main/installation.html
+
+- name: Add Apptainer PPA
+  become: true
+  apt_repository:
+    repo: ppa:apptainer/ppa
+    update_cache: true
+- name: Install Apptainer from PPA
+  become: true
+  apt:
+    name: apptainer
+    update_cache: true
+- name: Verify Apptainer installation
+  command: apptainer --version
+  register: apptainer_version
+  changed_when: false
+- name: Display Apptainer version
+  debug:
+    msg: "Apptainer installed: {{ apptainer_version.stdout }}"
