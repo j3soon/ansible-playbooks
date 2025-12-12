@@ -1,0 +1,33 @@
+# Ref: https://kind.sigs.k8s.io/docs/user/quick-start/#installing-with-go-install
+- name: Check if Go is installed
+  command: which go
+  register: go_check
+  ignore_errors: true
+  changed_when: false
+
+- name: Fail if Go is not installed
+  fail:
+    msg: "Go is not installed. Please install Go first (include tasks/golang.yaml)"
+  when: go_check.rc != 0
+
+- name: Install Kind
+  command: go install sigs.k8s.io/kind@latest
+  environment:
+    PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ ansible_env.HOME }}/go/bin"
+    GOPATH: "{{ ansible_env.HOME }}/go"
+
+# Ref: https://kind.sigs.k8s.io/docs/user/known-issues/#pod-errors-due-to-too-many-open-files
+- name: Increase inotify max_user_watches
+  become: true
+  sysctl:
+    name: fs.inotify.max_user_watches
+    value: '524288'
+    sysctl_file: /etc/sysctl.conf
+    reload: true
+- name: Increase inotify max_user_instances
+  become: true
+  sysctl:
+    name: fs.inotify.max_user_instances
+    value: '512'
+    sysctl_file: /etc/sysctl.conf
+    reload: true

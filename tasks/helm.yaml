@@ -1,0 +1,6 @@
+# Ref: https://helm.sh/docs/intro/install/#from-snap
+- name: Install helm
+  become: true
+  snap:
+    name: helm
+    classic: true

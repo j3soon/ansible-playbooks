@@ -1,0 +1,19 @@
+# Ref: https://go.dev/wiki/Ubuntu
+- name: Add Go PPA
+  become: true
+  apt_repository:
+    repo: ppa:longsleep/golang-backports
+    update_cache: true
+
+- name: Install Go
+  become: true
+  apt:
+    name: golang-go
+    state: latest
+    update_cache: true
+
+  # Ref: https://pkg.go.dev/cmd/go#hdr-Compile_and_install_packages_and_dependencies
+- name: Add Go installed binaries to PATH
+  lineinfile:
+    path: ~/.profile
+    line: 'export PATH="$PATH:{{ ansible_env.HOME }}/go/bin"'

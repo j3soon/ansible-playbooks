@@ -1,0 +1,55 @@
+# Ref: https://github.com/NVIDIA/nvkind
+
+- name: Check if nvkind is installed
+  command: which nvkind
+  register: nvkind_check
+  ignore_errors: true
+  changed_when: false
+
+- name: Check if nvidia-container-toolkit is installed
+  command: which nvidia-ctk
+  register: nvidia_ctk_check
+  ignore_errors: true
+  changed_when: false
+  when: nvkind_check.rc != 0
+
+- name: Fail if nvidia-container-toolkit is not installed
+  fail:
+    msg: "nvidia-container-toolkit is not installed. Please install nvidia-container-toolkit first (include tasks/nvidia-docker.yaml)"
+  when: nvkind_check.rc != 0 and nvidia_ctk_check.rc != 0
+
+- name: Check if Go is installed
+  command: which go
+  register: go_check
+  ignore_errors: true
+  changed_when: false
+  when: nvkind_check.rc != 0
+
+- name: Fail if Go is not installed
+  fail:
+    msg: "Go is not installed. Please install Go first (include tasks/golang.yaml)"
+  when: nvkind_check.rc != 0 and go_check.rc != 0
+
+- name: Configure nvidia-ctk runtime for Docker
+  become: true
+  command: nvidia-ctk runtime configure --runtime=docker --set-as-default --cdi.enabled
+  when: nvkind_check.rc != 0
+
+- name: Configure nvidia-ctk to accept nvidia-visible-devices as volume mounts
+  become: true
+  command: nvidia-ctk config --set accept-nvidia-visible-devices-as-volume-mounts=true --in-place
+  when: nvkind_check.rc != 0
+
+- name: Restart Docker service
+  become: true
+  systemd:
+    name: docker
+    state: restarted
+  when: nvkind_check.rc != 0
+
+- name: Install nvkind
+  command: go install github.com/NVIDIA/nvkind/cmd/nvkind@latest
+  environment:
+    PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ ansible_env.HOME }}/go/bin"
+    GOPATH: "{{ ansible_env.HOME }}/go"
+  when: nvkind_check.rc != 0

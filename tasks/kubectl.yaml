@@ -1,0 +1,6 @@
+# Ref: https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-using-other-package-management
+- name: Install kubectl
+  become: true
+  snap:
+    name: kubectl
+    classic: true

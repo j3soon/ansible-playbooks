@@ -20,6 +20,16 @@ sudo add-apt-repository -y --update ppa:ansible/ansible
 sudo apt install -y ansible
 ```
 
+and create an inventory file (replace `<TARGET_HOST_IP_*>` with the IP addresses of the target hosts):
+
+```sh
+cat <<EOF > inventory
+[dev]
+<TARGET_HOST_IP_1>
+<TARGET_HOST_IP_2>
+EOF
+```
+
 Set up OpenSSH server and Copy SSH Key on the remote hosts by following [this post](https://tutorial.j3soon.com/remote-development/openssh-server/).
 
 ## Basics
