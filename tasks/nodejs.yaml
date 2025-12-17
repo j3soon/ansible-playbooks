@@ -1,0 +1,18 @@
+# Ref: https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating
+- name: Check if nvm is installed
+  stat:
+    path: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+  register: nvm_check
+
+- name: Install nvm
+  shell: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+  args:
+    creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+  when: not nvm_check.stat.exists
+
+- name: Install Node.js using nvm
+  shell: |
+    source {{ ansible_env.HOME }}/.nvm/nvm.sh
+    nvm install node
+  args:
+    executable: /bin/bash

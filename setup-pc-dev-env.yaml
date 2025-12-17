@@ -12,6 +12,7 @@
     - include_tasks: tasks/suppress-popups.yaml
     - include_tasks: tasks/set-locale.yaml
     - include_tasks: tasks/common-tools.yaml
+    - include_tasks: tasks/zsh-and-plugins.yaml
     - include_tasks: tasks/vscode.yaml
     - include_tasks: tasks/uv.yaml
     - include_tasks: tasks/gnome-favorites.yaml
@@ -28,7 +29,6 @@
     - include_tasks: tasks/x11vnc.yaml
     - include_tasks: tasks/mute-system-volume.yaml
     - include_tasks: tasks/git-config-for-johnson.yaml
-    - include_tasks: tasks/zsh-and-plugins.yaml
     # Optional software
     # - include_tasks: tasks/android-studio.yaml
     # - include_tasks: tasks/java-openjdk.yaml
@@ -37,6 +37,9 @@
     # - include_tasks: tasks/nvkind.yaml
     # - include_tasks: tasks/kubectl.yaml
     # - include_tasks: tasks/helm.yaml
+    - include_tasks: tasks/obs-studio.yaml
+    - include_tasks: tasks/nodejs.yaml
+    - include_tasks: tasks/bazel.yaml
 
     - name: Upgrade apt packages
       # Reference: https://stackoverflow.com/a/41537418

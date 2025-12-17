@@ -1,0 +1,15 @@
+# Ref: https://bazel.build/install/bazelisk
+# Ref: https://github.com/bazelbuild/bazelisk?tab=readme-ov-file#installation
+- name: Install Bazelisk (Bazel version manager)
+  shell: |
+    source {{ ansible_env.HOME }}/.nvm/nvm.sh
+    npm install -g @bazel/bazelisk
+  args:
+    executable: /bin/bash
+
+- name: Verify Bazel installation
+  shell: |
+    source {{ ansible_env.HOME }}/.nvm/nvm.sh
+    bazel version
+  args:
+    executable: /bin/bash

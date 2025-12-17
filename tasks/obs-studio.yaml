@@ -1,0 +1,13 @@
+# Ref: https://obsproject.com/kb/linux-installation
+- name: Add OBS Studio PPA
+  become: true
+  apt_repository:
+    repo: ppa:obsproject/obs-studio
+    update_cache: true
+
+- name: Install OBS Studio
+  become: true
+  apt:
+    name: obs-studio
+    state: latest
+    update_cache: true
