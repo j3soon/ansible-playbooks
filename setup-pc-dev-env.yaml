@@ -37,9 +37,10 @@
     # - include_tasks: tasks/nvkind.yaml
     # - include_tasks: tasks/kubectl.yaml
     # - include_tasks: tasks/helm.yaml
-    - include_tasks: tasks/obs-studio.yaml
-    - include_tasks: tasks/nodejs.yaml
-    - include_tasks: tasks/bazel.yaml
+    # - include_tasks: tasks/obs-studio.yaml
+    # - include_tasks: tasks/nodejs.yaml
+    # - include_tasks: tasks/bazel.yaml
+    # - include_tasks: tasks/aws-cli.yaml
 
     - name: Upgrade apt packages
       # Reference: https://stackoverflow.com/a/41537418
