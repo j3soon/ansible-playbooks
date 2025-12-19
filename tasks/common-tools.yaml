@@ -7,6 +7,7 @@
       - git-lfs
       - htop
       - iputils-ping
+      - isc-dhcp-client
       - jq
       - nano
       - net-tools

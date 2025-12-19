@@ -1,5 +1,6 @@
 # Since x11vnc connects directly to the physical display, a monitor or
-# dummy dongle must be connected at boot time.
+# dummy dongle must be connected at boot time. The `gdm-auto-login.yaml`
+# task should also be included.
 # Ref: https://wiki.archlinux.org/title/X11vnc
 # Ref: https://help.ubuntu.com/community/VNC/Servers#x11vnc
 - name: Install x11vnc

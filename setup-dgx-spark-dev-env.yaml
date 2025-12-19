@@ -5,19 +5,11 @@
       x86_64: amd64
       aarch64: arm64
   tasks:
-    # Note that Docker, Docker Compose, NVIDIA Driver, and NVIDIA Docker, are installed by default on Jetson
-    - include_tasks: tasks/suppress-popups.yaml
-    - include_tasks: tasks/set-locale.yaml
+    # Note that Docker, Docker Compose, NVIDIA Driver, and NVIDIA Docker, Firefox, are installed by default on DGX Spark
     - include_tasks: tasks/common-tools.yaml
-    - include_tasks: tasks/gnome-favorites.yaml
     - include_tasks: tasks/gui-tools.yaml
-    - include_tasks: tasks/docker-group.yaml
     - include_tasks: tasks/gdm-auto-login.yaml
     - include_tasks: tasks/x11vnc.yaml
-    - include_tasks: tasks/mute-system-volume.yaml
-    - include_tasks: tasks/zsh-and-plugins.yaml
-    - include_tasks: tasks/jetsonhacks-jetsonUtilities.yaml
-    - include_tasks: tasks/jtop.yaml
 
     - name: Upgrade apt packages
       # Reference: https://stackoverflow.com/a/41537418

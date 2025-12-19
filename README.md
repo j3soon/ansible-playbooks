@@ -34,19 +34,25 @@ Set up OpenSSH server and Copy SSH Key on the remote hosts by following [this po
 
 ## Basics
 
-On x86:
+For x86:
 
 ```sh
 ansible-playbook --ask-become-pass -i inventory setup-pc-dev-env.yaml
 ```
 
-On Jetson:
+For Jetson:
 
 ```sh
 ansible-playbook --ask-become-pass -i inventory setup-jetson-dev-env.yaml
 ```
 
-On Local (need to comment out all unnecessary tasks):
+For DGX Spark:
+
+```sh
+ansible-playbook --ask-become-pass -i inventory setup-dgx-spark-dev-env.yaml
+```
+
+For Local (need to comment out all unnecessary tasks):
 
 ```sh
 # Note that this will install everything on the current local host.
