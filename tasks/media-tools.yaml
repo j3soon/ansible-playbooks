@@ -1,0 +1,32 @@
+# Installs OBS Studio, VLC, and ffmpeg
+
+# Ref: https://obsproject.com/kb/linux-installation
+- name: Add OBS Studio PPA
+  become: true
+  apt_repository:
+    repo: ppa:obsproject/obs-studio
+    update_cache: true
+
+- name: Install OBS Studio
+  become: true
+  apt:
+    name: obs-studio
+    update_cache: true
+
+- name: Install VLC
+  become: true
+  apt:
+    name: vlc
+    update_cache: true
+
+- name: Install ffmpeg
+  become: true
+  apt:
+    name: ffmpeg
+    update_cache: true
+
+- name: Install File Roller (archive manager)
+  become: true
+  apt:
+    name: file-roller
+    update_cache: true
