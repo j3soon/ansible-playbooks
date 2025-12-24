@@ -8,6 +8,7 @@
     # Note that Docker, Docker Compose, NVIDIA Driver, and NVIDIA Docker, Firefox, are installed by default on DGX Spark
     - include_tasks: tasks/common-tools.yaml
     - include_tasks: tasks/gui-tools.yaml
+    - include_tasks: tasks/docker-group.yaml
     - include_tasks: tasks/gdm-auto-login.yaml
     - include_tasks: tasks/x11vnc.yaml
 
