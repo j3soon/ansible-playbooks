@@ -37,8 +37,9 @@
     # - include_tasks: tasks/nvkind.yaml
     # - include_tasks: tasks/kubectl.yaml
     # - include_tasks: tasks/helm.yaml
-    - include_tasks: tasks/media-tools.yaml
+    # - include_tasks: tasks/media-tools.yaml
     # - include_tasks: tasks/nodejs.yaml
+    # - include_tasks: tasks/bun.yaml
     # - include_tasks: tasks/bazel.yaml
     # - include_tasks: tasks/aws-cli.yaml
 

@@ -1,0 +1,21 @@
+# Ref: https://bun.com/docs/installation
+- name: Check if bun is already installed
+  command: "{{ ansible_env.HOME }}/.bun/bin/bun --version"
+  register: bun_check
+  failed_when: false
+  changed_when: false
+
+- name: Install bun via standalone installer
+  shell: curl -fsSL https://bun.com/install | bash
+  args:
+    executable: /bin/bash
+  when: bun_check.rc != 0
+
+- name: Verify bun installation
+  command: "{{ ansible_env.HOME }}/.bun/bin/bun --version"
+  register: bun_version
+  changed_when: false
+
+- name: Display bun version
+  debug:
+    msg: "bun installed: {{ bun_version.stdout }}"

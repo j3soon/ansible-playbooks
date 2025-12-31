@@ -16,4 +16,4 @@
 - name: Add Go installed binaries to PATH
   lineinfile:
     path: ~/.profile
-    line: 'export PATH="$PATH:{{ ansible_env.HOME }}/go/bin"'
+    line: 'export PATH="$PATH:$HOME/go/bin"'
