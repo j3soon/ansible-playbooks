@@ -3,6 +3,13 @@
 # task should also be included.
 # Ref: https://wiki.archlinux.org/title/X11vnc
 # Ref: https://help.ubuntu.com/community/VNC/Servers#x11vnc
+- name: Disable Wayland (x11vnc requires X11)
+  become: true
+  lineinfile:
+    path: /etc/gdm3/custom.conf
+    regexp: '^#.*WaylandEnable.*=.*$'
+    line: 'WaylandEnable=false'
+  register: disable_wayland
 - name: Install x11vnc
   become: true
   apt:
@@ -36,4 +43,4 @@
     owner: root
     group: root
     mode: '0644'
-  when: x11vnc_desktop_autostart.changed
+  when: disable_wayland.changed or x11vnc_desktop_autostart.changed
