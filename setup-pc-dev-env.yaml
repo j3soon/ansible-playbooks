@@ -30,6 +30,7 @@
     - include_tasks: tasks/mute-system-volume.yaml
     - include_tasks: tasks/git-config-for-johnson.yaml
     # Optional software
+    # - include_tasks: tasks/github-cli.yaml
     # - include_tasks: tasks/android-studio.yaml
     # - include_tasks: tasks/java-openjdk.yaml
     # - include_tasks: tasks/golang.yaml

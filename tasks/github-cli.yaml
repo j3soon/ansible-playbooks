@@ -1,0 +1,34 @@
+# Ref: https://github.com/cli/cli/blob/trunk/docs/install_linux.md#debian
+- name: Install required packages for GitHub CLI
+  become: true
+  apt:
+    name:
+      - wget
+    update_cache: true
+
+- name: Create directory for GitHub CLI GPG key
+  become: true
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+
+- name: Download GitHub CLI GPG key
+  become: true
+  get_url:
+    url: https://cli.github.com/packages/githubcli-archive-keyring.gpg
+    dest: /etc/apt/keyrings/githubcli-archive-keyring.gpg
+    mode: '0644'
+
+- name: Add GitHub CLI repository
+  become: true
+  apt_repository:
+    repo: "deb [arch={{ arch_map[ansible_architecture] }} signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main"
+    filename: github-cli
+    update_cache: true
+
+- name: Install GitHub CLI
+  become: true
+  apt:
+    name: gh
+    update_cache: true
