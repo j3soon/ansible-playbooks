@@ -1,0 +1,13 @@
+# Ref: https://code.claude.com/docs/en/setup
+- name: Check if Claude Code is installed
+  command: bash -lc "command -v claude"
+  register: claude_code_check
+  changed_when: false
+  failed_when: false
+
+- name: Install Claude Code
+  shell: |
+    curl -fsSL https://claude.ai/install.sh | bash
+  args:
+    executable: /bin/bash
+  when: claude_code_check.rc != 0

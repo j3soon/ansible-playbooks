@@ -1,0 +1,28 @@
+# Ref: https://developers.openai.com/codex/cli
+- name: Check if Codex CLI is installed
+  command: bash -lc "command -v codex"
+  register: codex_check
+  changed_when: false
+  failed_when: false
+
+- name: Check if npm is installed
+  command: bash -lc "command -v npm"
+  register: npm_check
+  changed_when: false
+  failed_when: false
+
+- name: Fail when npm is missing
+  fail:
+    msg: "Codex CLI installation requires npm. Please install Node.js/npm first (e.g., include tasks/nodejs.yaml)."
+  when:
+    - codex_check.rc != 0
+    - npm_check.rc != 0
+
+- name: Install Codex CLI
+  shell: |
+    npm install -g @openai/codex
+  args:
+    executable: /bin/bash
+  when:
+    - codex_check.rc != 0
+    - npm_check.rc == 0
