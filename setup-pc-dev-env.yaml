@@ -15,6 +15,7 @@
     - include_tasks: tasks/zsh-and-plugins.yaml
     - include_tasks: tasks/vscode.yaml
     - include_tasks: tasks/uv.yaml
+    - include_tasks: tasks/conda-forge.yaml
     - include_tasks: tasks/gnome-favorites.yaml
     - include_tasks: tasks/ssh-keygen.yaml
     - include_tasks: tasks/nvidia-driver.yaml
