@@ -39,6 +39,16 @@
     regexp: '^export PATH="\$HOME/miniforge3/bin:\$PATH"$'
     create: true
 
+- name: Check conda auto_activate_base setting
+  command: "{{ ansible_env.HOME }}/miniforge3/bin/conda config --show auto_activate_base"
+  register: conda_auto_activate_base
+  changed_when: false
+
+# Ref: https://stackoverflow.com/a/54560785/3917161
+- name: Disable conda auto_activate_base
+  command: "{{ ansible_env.HOME }}/miniforge3/bin/conda config --set auto_activate_base false"
+  when: "'auto_activate_base: False' not in conda_auto_activate_base.stdout"
+
 - name: Initialize conda for bash
   command: "{{ ansible_env.HOME }}/miniforge3/bin/conda init bash"
   register: conda_init_bash
