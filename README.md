@@ -70,3 +70,5 @@ If strange issue occurs, consider upgrading the local host:
 ```sh
 sudo apt-get upgrade
 ```
+
+If some binaries cannot be executed directly (not in `PATH`), consider letting the playbook reboot the remote host for you (will reboot by default).

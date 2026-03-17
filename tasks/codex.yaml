@@ -1,12 +1,24 @@
 # Ref: https://developers.openai.com/codex/cli
 - name: Check if Codex CLI is installed
-  command: bash -lc "command -v codex"
+  shell: |
+    if [ -s "{{ ansible_env.HOME }}/.nvm/nvm.sh" ]; then
+      source "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+    fi
+    command -v codex
+  args:
+    executable: /bin/bash
   register: codex_check
   changed_when: false
   failed_when: false
 
 - name: Check if npm is installed
-  command: bash -lc "command -v npm"
+  shell: |
+    if [ -s "{{ ansible_env.HOME }}/.nvm/nvm.sh" ]; then
+      source "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+    fi
+    command -v npm
+  args:
+    executable: /bin/bash
   register: npm_check
   changed_when: false
   failed_when: false
@@ -20,6 +32,9 @@
 
 - name: Install Codex CLI
   shell: |
+    if [ -s "{{ ansible_env.HOME }}/.nvm/nvm.sh" ]; then
+      source "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+    fi
     npm install -g @openai/codex
   args:
     executable: /bin/bash

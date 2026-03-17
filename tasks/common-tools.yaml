@@ -16,6 +16,7 @@
       - p7zip-full
       - plocate
       - python3-pip
+      - ripgrep
       - tar
       - tmux
       - tree
