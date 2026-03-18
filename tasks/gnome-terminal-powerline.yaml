@@ -1,0 +1,17 @@
+- name: Install fonts-powerline
+  become: true
+  apt:
+    name: fonts-powerline
+    update_cache: true
+- name: Get GNOME Terminal default profile ID
+  shell: gsettings get org.gnome.Terminal.ProfilesList default | tr -d "'"
+  register: gnome_terminal_default_profile
+  changed_when: false
+- name: Disable system font for GNOME Terminal
+  dconf:
+    key: /org/gnome/terminal/legacy/profiles:/:{{ gnome_terminal_default_profile.stdout }}/use-system-font
+    value: false
+- name: Set GNOME Terminal font to Powerline
+  dconf:
+    key: /org/gnome/terminal/legacy/profiles:/:{{ gnome_terminal_default_profile.stdout }}/font
+    value: "'Monospace 13'"

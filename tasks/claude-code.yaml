@@ -1,4 +1,26 @@
 # Ref: https://code.claude.com/docs/en/setup
+# Ref: https://code.claude.com/docs/en/sandboxing#prerequisites
+- name: Install Claude Code sandbox dependencies
+  become: true
+  apt:
+    name:
+      - bubblewrap
+      - socat
+    state: present
+    update_cache: true
+
+- name: Allow unprivileged user namespaces for Claude Code sandbox on Ubuntu 24.04
+  become: true
+  sysctl:
+    name: kernel.apparmor_restrict_unprivileged_userns
+    value: '0'
+    state: present
+    sysctl_file: /etc/sysctl.conf
+    reload: true
+  when:
+    - ansible_distribution == "Ubuntu"
+    - ansible_distribution_version is version('24.04', '==')
+
 - name: Check if Claude Code is installed
   command: bash -lc "command -v claude"
   register: claude_code_check
