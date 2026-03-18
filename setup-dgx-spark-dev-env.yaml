@@ -15,7 +15,6 @@
     - include_tasks: tasks/mute-system-volume.yaml
     - include_tasks: tasks/zsh-and-plugins.yaml
     - include_tasks: tasks/gnome-terminal-powerline.yaml
-    - include_tasks: tasks/ubuntu-desktop-scale-100.yaml  # DGX Spark default scale is 200%.
     - include_tasks: tasks/git-config-for-johnson.yaml
     # Optional software
     # - include_tasks: tasks/github-cli.yaml
