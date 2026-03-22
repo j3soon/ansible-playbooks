@@ -16,6 +16,7 @@
     - include_tasks: tasks/x11vnc.yaml
     - include_tasks: tasks/mute-system-volume.yaml
     - include_tasks: tasks/zsh-and-plugins.yaml
+    - include_tasks: tasks/vscode.yaml
     - include_tasks: tasks/jetsonhacks-jetsonUtilities.yaml
     - include_tasks: tasks/jtop.yaml
 
