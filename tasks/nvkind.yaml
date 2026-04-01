@@ -50,6 +50,6 @@
 - name: Install nvkind
   command: go install github.com/NVIDIA/nvkind/cmd/nvkind@latest
   environment:
-    PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ ansible_env.HOME }}/go/bin"
-    GOPATH: "{{ ansible_env.HOME }}/go"
+    PATH: "{{ ansible_facts['env']['PATH'] }}:/usr/local/go/bin:{{ ansible_facts['env']['HOME'] }}/go/bin"
+    GOPATH: "{{ ansible_facts['env']['HOME'] }}/go"
   when: nvkind_check.rc != 0

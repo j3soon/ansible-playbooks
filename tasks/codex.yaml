@@ -1,8 +1,8 @@
 # Ref: https://developers.openai.com/codex/cli
 - name: Check if Codex CLI is installed
   shell: |
-    if [ -s "{{ ansible_env.HOME }}/.nvm/nvm.sh" ]; then
-      source "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+    if [ -s "{{ ansible_facts['env']['HOME'] }}/.nvm/nvm.sh" ]; then
+      source "{{ ansible_facts['env']['HOME'] }}/.nvm/nvm.sh"
     fi
     command -v codex
   args:
@@ -13,8 +13,8 @@
 
 - name: Check if npm is installed
   shell: |
-    if [ -s "{{ ansible_env.HOME }}/.nvm/nvm.sh" ]; then
-      source "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+    if [ -s "{{ ansible_facts['env']['HOME'] }}/.nvm/nvm.sh" ]; then
+      source "{{ ansible_facts['env']['HOME'] }}/.nvm/nvm.sh"
     fi
     command -v npm
   args:
@@ -32,8 +32,8 @@
 
 - name: Install Codex CLI
   shell: |
-    if [ -s "{{ ansible_env.HOME }}/.nvm/nvm.sh" ]; then
-      source "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+    if [ -s "{{ ansible_facts['env']['HOME'] }}/.nvm/nvm.sh" ]; then
+      source "{{ ansible_facts['env']['HOME'] }}/.nvm/nvm.sh"
     fi
     npm install -g @openai/codex
   args:

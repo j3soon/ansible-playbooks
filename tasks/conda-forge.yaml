@@ -1,15 +1,15 @@
 # Ref: https://conda-forge.org/download/
 - name: Set Miniforge architecture
   set_fact:
-    miniforge_arch: "{{ 'x86_64' if ansible_architecture == 'x86_64' else 'aarch64' if ansible_architecture == 'aarch64' else '' }}"
+    miniforge_arch: "{{ 'x86_64' if ansible_facts['architecture'] == 'x86_64' else 'aarch64' if ansible_facts['architecture'] == 'aarch64' else '' }}"
 
 - name: Fail if architecture is not supported by Miniforge task
   fail:
-    msg: "Unsupported architecture for Miniforge: {{ ansible_architecture }}"
+    msg: "Unsupported architecture for Miniforge: {{ ansible_facts['architecture'] }}"
   when: miniforge_arch == ''
 
 - name: Check if conda is already installed
-  command: "{{ ansible_env.HOME }}/miniforge3/bin/conda --version"
+  command: "{{ ansible_facts['env']['HOME'] }}/miniforge3/bin/conda --version"
   register: conda_check
   failed_when: false
   changed_when: false
@@ -22,37 +22,37 @@
   when: conda_check.rc != 0
 
 - name: Install Miniforge
-  command: "bash /tmp/Miniforge3-Linux-{{ miniforge_arch }}.sh -b -p {{ ansible_env.HOME }}/miniforge3"
+  command: "bash /tmp/Miniforge3-Linux-{{ miniforge_arch }}.sh -b -p {{ ansible_facts['env']['HOME'] }}/miniforge3"
   args:
-    creates: "{{ ansible_env.HOME }}/miniforge3/bin/conda"
+    creates: "{{ ansible_facts['env']['HOME'] }}/miniforge3/bin/conda"
   when: conda_check.rc != 0
 
 - name: Verify conda installation
-  command: "{{ ansible_env.HOME }}/miniforge3/bin/conda --version"
+  command: "{{ ansible_facts['env']['HOME'] }}/miniforge3/bin/conda --version"
   register: conda_version
   changed_when: false
 
 - name: Add Miniforge bin to PATH in ~/.profile
   lineinfile:
-    path: "{{ ansible_env.HOME }}/.profile"
+    path: "{{ ansible_facts['env']['HOME'] }}/.profile"
     line: 'export PATH="$HOME/miniforge3/bin:$PATH"'
     regexp: '^export PATH="\$HOME/miniforge3/bin:\$PATH"$'
     create: true
 
 - name: Check conda auto activation setting
-  command: "{{ ansible_env.HOME }}/miniforge3/bin/conda config --show auto_activate_base"
+  command: "{{ ansible_facts['env']['HOME'] }}/miniforge3/bin/conda config --show auto_activate_base"
   register: conda_auto_activate_base
   changed_when: false
 
 # Ref: https://stackoverflow.com/a/54560785/3917161
 - name: Disable conda auto activation for base
-  command: "{{ ansible_env.HOME }}/miniforge3/bin/conda config --set auto_activate_base false"
+  command: "{{ ansible_facts['env']['HOME'] }}/miniforge3/bin/conda config --set auto_activate_base false"
   when:
     - "'auto_activate_base: False' not in conda_auto_activate_base.stdout"
     - "'auto_activate: False' not in conda_auto_activate_base.stdout"
 
 - name: Initialize conda for bash
-  command: "{{ ansible_env.HOME }}/miniforge3/bin/conda init bash"
+  command: "{{ ansible_facts['env']['HOME'] }}/miniforge3/bin/conda init bash"
   register: conda_init_bash
   changed_when: "'modified' in conda_init_bash.stdout"
 
@@ -65,7 +65,7 @@
   changed_when: false
 
 - name: Initialize conda for zsh
-  command: "{{ ansible_env.HOME }}/miniforge3/bin/conda init zsh"
+  command: "{{ ansible_facts['env']['HOME'] }}/miniforge3/bin/conda init zsh"
   register: conda_init_zsh
   changed_when: "'modified' in conda_init_zsh.stdout"
   when: zsh_check.rc == 0

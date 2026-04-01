@@ -13,8 +13,8 @@
 - name: Install Kind
   command: go install sigs.k8s.io/kind@latest
   environment:
-    PATH: "{{ ansible_env.PATH }}:/usr/local/go/bin:{{ ansible_env.HOME }}/go/bin"
-    GOPATH: "{{ ansible_env.HOME }}/go"
+    PATH: "{{ ansible_facts['env']['PATH'] }}:/usr/local/go/bin:{{ ansible_facts['env']['HOME'] }}/go/bin"
+    GOPATH: "{{ ansible_facts['env']['HOME'] }}/go"
 
 # Ref: https://kind.sigs.k8s.io/docs/user/known-issues/#pod-errors-due-to-too-many-open-files
 - name: Increase inotify max_user_watches

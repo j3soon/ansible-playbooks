@@ -1,6 +1,6 @@
 # Ref: https://bun.com/docs/installation
 - name: Check if bun is already installed
-  command: "{{ ansible_env.HOME }}/.bun/bin/bun --version"
+  command: "{{ ansible_facts['env']['HOME'] }}/.bun/bin/bun --version"
   register: bun_check
   failed_when: false
   changed_when: false
@@ -12,7 +12,7 @@
   when: bun_check.rc != 0
 
 - name: Verify bun installation
-  command: "{{ ansible_env.HOME }}/.bun/bin/bun --version"
+  command: "{{ ansible_facts['env']['HOME'] }}/.bun/bin/bun --version"
   register: bun_version
   changed_when: false
 

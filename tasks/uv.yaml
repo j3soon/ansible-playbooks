@@ -1,6 +1,6 @@
 # Ref: https://docs.astral.sh/uv/getting-started/installation/
 - name: Check if uv is already installed
-  command: "{{ ansible_env.HOME }}/.local/bin/uv --version"
+  command: "{{ ansible_facts['env']['HOME'] }}/.local/bin/uv --version"
   register: uv_check
   failed_when: false
   changed_when: false
@@ -12,7 +12,7 @@
   when: uv_check.rc != 0
 
 - name: Verify uv installation
-  command: "{{ ansible_env.HOME }}/.local/bin/uv --version"
+  command: "{{ ansible_facts['env']['HOME'] }}/.local/bin/uv --version"
   register: uv_version
   changed_when: false
 

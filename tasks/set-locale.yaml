@@ -19,7 +19,7 @@
     owner: root
     group: root
     mode: '0644'
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_version is version('22.04', '==')
+  when: ansible_facts['distribution'] == 'Ubuntu' and ansible_facts['distribution_version'] is version('22.04', '==')
   register: set_locale_22
 
 - name: Set locale to en_US (Ubuntu 24.04)
@@ -32,7 +32,7 @@
     owner: root
     group: root
     mode: '0644'
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_version is version('24.04', '==')
+  when: ansible_facts['distribution'] == 'Ubuntu' and ansible_facts['distribution_version'] is version('24.04', '==')
   register: set_locale_24
 
 - name: Require reboot

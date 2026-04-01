@@ -6,12 +6,12 @@
   snap:
     name: code
     classic: true
-  when: ansible_architecture == 'x86_64'
+  when: ansible_facts['architecture'] == 'x86_64'
 
 - name: Gather package facts for arm64 VS Code install
   package_facts:
     manager: auto
-  when: ansible_architecture == 'aarch64'
+  when: ansible_facts['architecture'] == 'aarch64'
 
 - name: Download Visual Studio Code arm64 package
   get_url:
@@ -19,7 +19,7 @@
     dest: /tmp/vscode-arm64.deb
     mode: '0644'
   when:
-    - ansible_architecture == 'aarch64'
+    - ansible_facts['architecture'] == 'aarch64'
     - "'code' not in ansible_facts.packages"
 
 - name: Install Visual Studio Code arm64 package
@@ -27,5 +27,5 @@
   command:
     cmd: dpkg -i /tmp/vscode-arm64.deb
   when:
-    - ansible_architecture == 'aarch64'
+    - ansible_facts['architecture'] == 'aarch64'
     - "'code' not in ansible_facts.packages"
