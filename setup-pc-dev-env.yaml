@@ -18,6 +18,7 @@
     - include_tasks: tasks/conda-forge.yaml
     - include_tasks: tasks/gnome-favorites.yaml
     - include_tasks: tasks/ssh-keygen.yaml
+    - include_tasks: tasks/sshd-prioritization.yaml
     - include_tasks: tasks/nvidia-driver.yaml
     - include_tasks: tasks/nvidia-tools.yaml
     - include_tasks: tasks/gui-tools.yaml

@@ -1,0 +1,36 @@
+- name: Ensure ssh.service drop-in directory exists
+  become: true
+  file:
+    path: /etc/systemd/system/ssh.service.d
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Configure ssh.service prioritization override
+  become: true
+  copy:
+    dest: /etc/systemd/system/ssh.service.d/override.conf
+    owner: root
+    group: root
+    mode: '0644'
+    content: |
+      [Service]
+      Nice=-10
+      OOMScoreAdjust=-1000
+      MemoryMin=256M
+      MemorySwapMax=0
+      CPUWeight=1000
+  register: ssh_service_override
+
+- name: Restart ssh to apply systemd override
+  become: true
+  systemd:
+    name: ssh
+    daemon_reload: true
+    state: restarted
+  when: ssh_service_override.changed
+
+# Note that this can be confirmed by:
+# $ ps -o pid,ni,comm -p $(pidof sshd)
+# $ systemctl show ssh.service | grep -E 'Nice|OOMScoreAdjust|MemoryMin|MemorySwapMax|CPUWeight'
