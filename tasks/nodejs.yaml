@@ -10,9 +10,25 @@
     creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
   when: not nvm_check.stat.exists
 
+- name: Check whether Node.js install via nvm is needed
+  shell: |
+    source {{ ansible_env.HOME }}/.nvm/nvm.sh
+    installed_version="$(nvm version node)"
+    remote_version="$(nvm version-remote node)"
+    if [ "$installed_version" = "N/A" ] || [ "$installed_version" != "$remote_version" ]; then
+      echo install_needed=true
+    else
+      echo install_needed=false
+    fi
+  args:
+    executable: /bin/bash
+  register: nvm_node_status
+  changed_when: false
+
 - name: Install Node.js using nvm
   shell: |
     source {{ ansible_env.HOME }}/.nvm/nvm.sh
     nvm install node
   args:
     executable: /bin/bash
+  when: "'install_needed=true' in nvm_node_status.stdout"

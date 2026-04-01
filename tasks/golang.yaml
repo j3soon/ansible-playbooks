@@ -9,7 +9,7 @@
   become: true
   apt:
     name: golang-go
-    state: latest
+    state: present
     update_cache: true
 
   # Ref: https://pkg.go.dev/cmd/go#hdr-Compile_and_install_packages_and_dependencies
