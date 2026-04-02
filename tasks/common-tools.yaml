@@ -6,6 +6,7 @@
       - git
       - git-lfs
       - htop
+      - iotop
       - iputils-ping
       - isc-dhcp-client
       - jq
@@ -36,3 +37,6 @@
     name: python3-psutil
     state: present
     update_cache: true
+
+# For system wide IO stat, no need for iotop, just use
+#     iostat -xz 1
