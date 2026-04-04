@@ -1,0 +1,9 @@
+- name: Show hidden files in GNOME Files
+  # References:
+  # - https://askubuntu.com/questions/470504/how-to-make-nautilus-show-hidden-files-by-default
+  # - https://help.gnome.org/users/gnome-help/stable/files-hidden.html.en
+  dconf:
+    key: /org/gnome/nautilus/preferences/show-hidden-files
+    value: true
+
+# TODO: Not sure if this is working.
