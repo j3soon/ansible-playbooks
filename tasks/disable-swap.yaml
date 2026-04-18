@@ -1,0 +1,12 @@
+- name: Disable active swap
+  become: true
+  command: swapoff -a
+  when: ansible_swaptotal_mb | default(0) | int > 0
+  changed_when: ansible_swaptotal_mb | default(0) | int > 0
+
+- name: Remove swap entries from /etc/fstab
+  become: true
+  lineinfile:
+    path: /etc/fstab
+    regexp: '^\s*[^#]+\s+[^#]+\s+swap(\s+.*)?$'
+    state: absent
