@@ -8,6 +8,7 @@
   apt:
     name:
       - nvidia-driver-580-open
+      - nvidia-dkms-580-open
     update_cache: true
   register: install_nvidia_driver
 - name: Require reboot
