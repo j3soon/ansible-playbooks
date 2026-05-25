@@ -35,6 +35,7 @@
     - include_tasks: tasks/git-config-for-johnson.yaml
     # Optional software
     - include_tasks: tasks/github-cli.yaml
+    # - include_tasks: tasks/capslock-as-escape.yaml
     # - include_tasks: tasks/claude-code.yaml
     # - include_tasks: tasks/nodejs.yaml
     # - include_tasks: tasks/codex.yaml

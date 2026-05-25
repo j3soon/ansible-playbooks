@@ -1,0 +1,5 @@
+- name: Map Caps Lock to Escape in GNOME
+  # Pressing Caps Lock emits Escape; the Escape key keeps its default behavior.
+  dconf:
+    key: /org/gnome/desktop/input-sources/xkb-options
+    value: "['caps:escape']"
