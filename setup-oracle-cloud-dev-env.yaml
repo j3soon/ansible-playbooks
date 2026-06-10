@@ -1,0 +1,30 @@
+- name: Setup development environment
+  hosts: dev
+  vars:
+    arch_map:
+      x86_64: amd64
+      aarch64: arm64
+  tasks:
+    - include_tasks: tasks/common-tools.yaml
+    - include_tasks: tasks/docker.yaml
+    - include_tasks: tasks/docker-group.yaml
+
+    - name: Upgrade apt packages
+      # Reference: https://stackoverflow.com/a/41537418
+      become: true
+      apt:
+        upgrade: true
+        update_cache: true
+        cache_valid_time: 86400
+        autoclean: true
+        autoremove: true
+
+    - name: Check if reboot is required
+      # Reference: https://aaronsaray.com/2021/ansible-reboot-if-required/
+      stat:
+        path: /var/run/reboot-required
+      register: reboot_required_file
+    - name: Reboot if required
+      become: true
+      reboot:
+      when: reboot_required_file.stat.exists == true

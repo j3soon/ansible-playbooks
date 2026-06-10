@@ -52,6 +52,12 @@ For DGX Spark:
 ansible-playbook --ask-become-pass -i inventory setup-dgx-spark-dev-env.yaml
 ```
 
+For Oracle Cloud (VM.Standard.A1.Flex):
+
+```sh
+ansible-playbook --ask-become-pass -i inventory setup-oracle-cloud-dev-env.yaml
+```
+
 For Local (need to comment out all unnecessary tasks):
 
 ```sh
