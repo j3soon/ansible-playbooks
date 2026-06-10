@@ -1,0 +1,63 @@
+# Note: Vibe-coded and not tested thoughroughly yet.
+
+- name: Install Chewing input method for IBus
+  become: true
+  apt:
+    name:
+      - ibus-chewing
+    update_cache: true
+  register: chewing_package
+
+- name: Check IBus preload engines
+  command:
+    argv:
+      - gsettings
+      - get
+      - org.freedesktop.ibus.general
+      - preload-engines
+  register: ibus_preload_engines
+  changed_when: false
+
+- name: Add English and Chewing to IBus preload engines
+  command:
+    argv:
+      - gsettings
+      - set
+      - org.freedesktop.ibus.general
+      - preload-engines
+      - "['xkb:us::eng', 'chewing']"
+  when: ibus_preload_engines.stdout != "['xkb:us::eng', 'chewing']"
+  register: ibus_preload_set
+
+- name: Restart IBus
+  command:
+    argv:
+      - ibus
+      - restart
+  changed_when: false
+  failed_when: false
+  when: chewing_package.changed or ibus_preload_set.changed
+
+- name: Exit IBus
+  command:
+    argv:
+      - ibus
+      - exit
+  changed_when: false
+  failed_when: false
+  when: chewing_package.changed or ibus_preload_set.changed
+
+- name: Start IBus daemon
+  command:
+    argv:
+      - ibus-daemon
+      - -drx
+  changed_when: false
+  failed_when: false
+  when: chewing_package.changed or ibus_preload_set.changed
+
+# After running this task, finish setup in GNOME:
+# - Open Settings -> Keyboard -> Input Sources.
+# - Click + Add Input Source... -> Other -> Chinese (Chewing).
+# - Switch between English and Chewing with Super + Space, or configure a
+#   preferred shortcut in Keyboard settings.
