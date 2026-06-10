@@ -27,10 +27,6 @@
       - wget
       - zip
     update_cache: true
-- name: Install firefox
-  become: true
-  snap:
-    name: firefox
 - name: Install psutil for dconf
   become: true
   apt:

@@ -9,6 +9,7 @@
     - include_tasks: tasks/suppress-popups.yaml
     - include_tasks: tasks/set-locale.yaml
     - include_tasks: tasks/common-tools.yaml
+    - include_tasks: tasks/firefox.yaml
     - include_tasks: tasks/gnome-favorites.yaml
     - include_tasks: tasks/gui-tools.yaml
     - include_tasks: tasks/docker-group.yaml
