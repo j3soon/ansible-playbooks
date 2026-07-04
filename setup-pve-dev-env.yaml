@@ -1,0 +1,27 @@
+- name: Setup development environment
+  hosts: dev
+  vars:
+    arch_map:
+      x86_64: amd64
+      aarch64: arm64
+  tasks:
+    - include_tasks: tasks/pve-no-subscription.yaml
+    - include_tasks: tasks/pve-common-tools.yaml
+
+    - name: Upgrade apt packages
+      # Reference: https://stackoverflow.com/a/41537418
+      apt:
+        upgrade: true
+        update_cache: true
+        cache_valid_time: 86400
+        autoclean: true
+        autoremove: true
+
+    - name: Check if reboot is required
+      # Reference: https://aaronsaray.com/2021/ansible-reboot-if-required/
+      stat:
+        path: /var/run/reboot-required
+      register: reboot_required_file
+    - name: Reboot if required
+      reboot:
+      when: reboot_required_file.stat.exists == true

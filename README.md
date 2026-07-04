@@ -34,7 +34,7 @@ Set up OpenSSH server and Copy SSH Key on the remote hosts by following [this po
 
 ## Basics
 
-For x86:
+For Ubuntu 24.04 LTS (x86):
 
 ```sh
 ansible-playbook --ask-become-pass -i inventory setup-pc-dev-env.yaml
@@ -58,6 +58,12 @@ For Oracle Cloud (VM.Standard.A1.Flex):
 ansible-playbook --ask-become-pass -i inventory setup-oracle-cloud-dev-env.yaml
 ```
 
+For Proxmox VE (PVE) 9.2 No-Subscription:
+
+```sh
+ansible-playbook -i inventory setup-pve-dev-env.yaml
+```
+
 For Local (need to comment out all unnecessary tasks):
 
 ```sh
@@ -78,3 +84,7 @@ sudo apt-get upgrade
 ```
 
 If some binaries cannot be executed directly (not in `PATH`), consider letting the playbook reboot the remote host for you (will reboot by default).
+
+## Hardware Setup
+
+Note that after running the above playbooks, you may also want to enable wake-on-lan (WoL) and virtualization in the machine BIOS for better management.

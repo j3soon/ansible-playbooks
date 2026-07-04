@@ -1,0 +1,54 @@
+# Ref: https://pve.proxmox.com/wiki/Package_Repositories#sysadmin_no_subscription_repo
+- name: Check for active Proxmox enterprise repo files
+  stat:
+    path: "{{ item }}"
+  register: proxmox_enterprise_repo_files
+  loop:
+    - /etc/apt/sources.list.d/pve-enterprise.sources
+    - /etc/apt/sources.list.d/ceph.sources
+
+- name: Preserve Proxmox enterprise repo files once
+  copy:
+    src: "{{ item.stat.path }}"
+    dest: "{{ item.stat.path }}.enterprise.bak"
+    remote_src: true
+    force: false
+    owner: root
+    group: root
+    mode: "0644"
+  loop: "{{ proxmox_enterprise_repo_files.results }}"
+  when: item.stat.exists
+
+- name: Disable active Proxmox enterprise repo files
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/apt/sources.list.d/pve-enterprise.sources
+    - /etc/apt/sources.list.d/ceph.sources
+
+- name: Enable Proxmox VE no-subscription repository
+  copy:
+    dest: /etc/apt/sources.list.d/pve-no-subscription.sources
+    owner: root
+    group: root
+    mode: "0644"
+    content: |
+      Types: deb
+      URIs: http://download.proxmox.com/debian/pve
+      Suites: trixie
+      Components: pve-no-subscription
+      Signed-By: /usr/share/keyrings/proxmox-archive-keyring.gpg
+
+- name: Enable Proxmox Ceph Squid no-subscription repository
+  copy:
+    dest: /etc/apt/sources.list.d/ceph-no-subscription.sources
+    owner: root
+    group: root
+    mode: "0644"
+    content: |
+      Types: deb
+      URIs: http://download.proxmox.com/debian/ceph-squid
+      Suites: trixie
+      Components: no-subscription
+      Signed-By: /usr/share/keyrings/proxmox-archive-keyring.gpg

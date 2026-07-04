@@ -1,0 +1,5 @@
+- name: Install PVE common tools
+  apt:
+    name:
+      - vim
+    update_cache: true
