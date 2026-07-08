@@ -1,0 +1,13 @@
+# Ref: https://opencode.ai/
+- name: Check if OpenCode is installed
+  command: bash -lc "command -v opencode || test -x ~/.opencode/bin/opencode"
+  register: opencode_check
+  changed_when: false
+  failed_when: false
+
+- name: Install OpenCode
+  shell: |
+    curl -fsSL https://opencode.ai/install | bash
+  args:
+    executable: /bin/bash
+  when: opencode_check.rc != 0

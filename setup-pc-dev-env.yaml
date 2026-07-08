@@ -41,6 +41,7 @@
     # - include_tasks: tasks/claude-code.yaml
     # - include_tasks: tasks/nodejs.yaml
     # - include_tasks: tasks/codex.yaml
+    # - include_tasks: tasks/opencode.yaml
     # - include_tasks: tasks/android-studio.yaml
     # - include_tasks: tasks/java-openjdk.yaml
     # - include_tasks: tasks/golang.yaml
