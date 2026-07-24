@@ -2,3 +2,41 @@
   become: true
   snap:
     name: steam
+
+- name: Ensure the APT keyring directory exists
+  become: true
+  file:
+    path: /usr/share/keyrings
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Install the Steam repository signing key
+  # Reference: https://repo.steampowered.com/steam/
+  become: true
+  get_url:
+    url: https://repo.steampowered.com/steam/archive/stable/steam.gpg
+    dest: /usr/share/keyrings/steam.gpg
+    owner: root
+    group: root
+    mode: '0644'
+    force: true
+
+# Steam requires the 32-bit NVIDIA OpenGL libraries to run 32-bit games.
+- name: Check whether the i386 architecture is enabled
+  command: dpkg --print-foreign-architectures
+  register: foreign_architectures
+  changed_when: false
+
+- name: Enable the i386 architecture for Steam
+  become: true
+  command: dpkg --add-architecture i386
+  when: "'i386' not in foreign_architectures.stdout_lines"
+
+- name: Install 32-bit NVIDIA OpenGL libraries for Steam
+  become: true
+  apt:
+    name: libnvidia-gl-595:i386
+    state: present
+    update_cache: true
