@@ -1,7 +1,5 @@
-- name: Install Steam
-  become: true
-  snap:
-    name: steam
+# Ref: https://github.com/ValveSoftware/steam-for-linux
+# Didn't use snap install due to trouble remote streaming.
 
 - name: Ensure the APT keyring directory exists
   become: true
@@ -23,7 +21,7 @@
     mode: '0644'
     force: true
 
-# Steam requires the 32-bit NVIDIA OpenGL libraries to run 32-bit games.
+# Steam requires i386 packages to run 32-bit games.
 - name: Check whether the i386 architecture is enabled
   command: dpkg --print-foreign-architectures
   register: foreign_architectures
@@ -34,9 +32,43 @@
   command: dpkg --add-architecture i386
   when: "'i386' not in foreign_architectures.stdout_lines"
 
+- name: Download the Steam Debian package
+  become: true
+  get_url:
+    url: http://media.steampowered.com/client/installer/steam.deb
+    dest: /tmp/steam.deb
+    owner: root
+    group: root
+    mode: '0644'
+    force: true
+
+- name: Install Steam from the Debian package
+  become: true
+  apt:
+    deb: /tmp/steam.deb
+    state: present
+
+- name: Install the 32-bit OpenGL library for Steam
+  become: true
+  apt:
+    name: libgl1:i386
+    state: present
+    update_cache: true
+
 - name: Install 32-bit NVIDIA OpenGL libraries for Steam
   become: true
   apt:
     name: libnvidia-gl-595:i386
     state: present
-    update_cache: true
+  register: install_nvidia_driver_i386
+
+- name: Require reboot after changing the 32-bit NVIDIA driver
+  become: true
+  copy:
+    content: ""
+    dest: /var/run/reboot-required
+    force: false
+    owner: root
+    group: root
+    mode: '0644'
+  when: install_nvidia_driver_i386.changed
